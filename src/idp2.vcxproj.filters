@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\ScannerArgumentsProvider">
+      <UniqueIdentifier>{330a9bfa-c37e-4790-809c-bc78efe4c3f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FileSystemScanner">
+      <UniqueIdentifier>{3bdb4828-b19a-4762-889f-2a4c145b00ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ScannerArgumentsProvider">
+      <UniqueIdentifier>{9af5e39a-6974-4f2b-94fc-5ecabb1d9dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileSystemScanner">
+      <UniqueIdentifier>{adb552b4-42ba-4c2c-9dc1-31fceceff5e9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScannerArgumentsProvider.h">
+      <Filter>Header Files\ScannerArgumentsProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystemScanner.h">
+      <Filter>Header Files\FileSystemScanner</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idp2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScannerArgumentsProvider.cpp">
+      <Filter>Source Files\ScannerArgumentsProvider</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
