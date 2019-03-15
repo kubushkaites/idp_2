@@ -25,6 +25,24 @@
     <Filter Include="Source Files\FileSystemScanner">
       <UniqueIdentifier>{adb552b4-42ba-4c2c-9dc1-31fceceff5e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TraversingStrategy">
+      <UniqueIdentifier>{3187746f-0888-4085-a866-e37af445ae3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TraversingStrategy">
+      <UniqueIdentifier>{01571e4d-3631-4b63-b69f-bd2b7dd022cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SearchGoalStrategy">
+      <UniqueIdentifier>{23cdcdd1-167d-4a79-bf32-d76d1e72b46b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ScanningProgressObserver">
+      <UniqueIdentifier>{2ea7048e-936b-4ee2-a69e-99bf40456a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ScanningProgressObserver">
+      <UniqueIdentifier>{e989ddf0-abc7-44f4-b8e5-ea4dd5f15cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SearchGoalStrategy">
+      <UniqueIdentifier>{5da25e92-5c30-4c15-a974-d3d764a283b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -36,6 +54,27 @@
     <ClInclude Include="FileSystemScanner.h">
       <Filter>Header Files\FileSystemScanner</Filter>
     </ClInclude>
+    <ClInclude Include="ITraversingStrategy.h">
+      <Filter>Header Files\TraversingStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystemObject.h">
+      <Filter>Header Files\FileSystemScanner</Filter>
+    </ClInclude>
+    <ClInclude Include="BreadthTraversingStrategy.h">
+      <Filter>Header Files\TraversingStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="FindLargestFoldersStrategy.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="ISearchGoalStrategy.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="IScanningProgressObserver.h">
+      <Filter>Header Files\ScanningProgressObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleScanningProgressObserver.h">
+      <Filter>Header Files\ScanningProgressObserver</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -46,6 +85,18 @@
     </ClCompile>
     <ClCompile Include="ScannerArgumentsProvider.cpp">
       <Filter>Source Files\ScannerArgumentsProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="BreadthTraversingStrategy.cpp">
+      <Filter>Source Files\TraversingStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemObject.cpp">
+      <Filter>Source Files\FileSystemScanner</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleScanningProgressObserver.cpp">
+      <Filter>Source Files\ScanningProgressObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="FindLargestFoldersStrategy.cpp">
+      <Filter>Source Files\SearchGoalStrategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,14 +3,14 @@
 #include "ScannerArgumentsProvider.h"
 
 
-class FileSystemScanner
-{
-public:
-	FileSystemScanner(const std::wstring& traversingStartPath, )
-private:
-
-private:
-
-};
+//class FileSystemScanner
+//{
+//public:
+//	FileSystemScanner(I )
+//private:
+//
+//private:
+//
+//};
 
 

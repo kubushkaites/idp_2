@@ -151,11 +151,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BreadthTraversingStrategy.h" />
+    <ClInclude Include="ConsoleScanningProgressObserver.h" />
+    <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
+    <ClInclude Include="FindLargestFoldersStrategy.h" />
+    <ClInclude Include="IScanningProgressObserver.h" />
+    <ClInclude Include="ISearchGoalStrategy.h" />
+    <ClInclude Include="ITraversingStrategy.h" />
     <ClInclude Include="ScannerArgumentsProvider.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BreadthTraversingStrategy.cpp" />
+    <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
+    <ClCompile Include="FileSystemObject.cpp" />
+    <ClCompile Include="FindLargestFoldersStrategy.cpp" />
     <ClCompile Include="idp2.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
