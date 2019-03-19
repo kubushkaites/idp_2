@@ -2,13 +2,13 @@
 #include "ISearchGoalStrategy.h"
 #include "IScanningProgressObserver.h"
 
-
 class FindLargestFoldersStrategy : public ISearchGoalStrategy
 {
 public:
-	FindLargestFoldersStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver);
-	virtual void performSearchGoalAction(FileSystemObjectSharedPtr& fileSystemObject) override;
+	FindLargestFoldersStrategy(const int amountOfFoldersToFind, ScanningProgressObserverSharedPtr scanningProgressObserver);
+	virtual void performSearchGoalAction(FileSystemObjectSharedPtr fileSystemObject) override;
 	virtual ~FindLargestFoldersStrategy() {};
 private:
-	ScanningProgressObserverSharedPtr scanningProgressObserver;
+	int amountOfFoldersToFind = 0;
+	ScanningProgressObserverSharedPtr scanningProgressObserver = nullptr;
 };

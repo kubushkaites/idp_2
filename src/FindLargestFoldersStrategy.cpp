@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "FindLargestFoldersStrategy.h"
+#include "FileSystemObject.h"
 
-FindLargestFoldersStrategy::FindLargestFoldersStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
-	:scanningProgressObserver(scanningProgressObserver)
+FindLargestFoldersStrategy::FindLargestFoldersStrategy(const int amountOfFoldersToFind, ScanningProgressObserverSharedPtr scanningProgressObserver)
+	: amountOfFoldersToFind(amountOfFoldersToFind),
+	scanningProgressObserver(scanningProgressObserver)
 {
 }
 
-void FindLargestFoldersStrategy::performSearchGoalAction(FileSystemObjectSharedPtr & fileSystemObject)
+void FindLargestFoldersStrategy::performSearchGoalAction(FileSystemObjectSharedPtr fileSystemObject)
 {
 }

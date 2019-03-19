@@ -17,3 +17,4 @@ private:
 	std::wstring fileSystemObjectName;
 	DWORD fileSystemObjectSize;
 };
+

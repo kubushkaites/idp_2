@@ -1,8 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "ScannerArgumentsProvider.h"
-
-class FileSystemObject;
+#include "FileSystemObject.h"
 
 class IScanningProgressObserver;
 

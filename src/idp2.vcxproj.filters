@@ -75,6 +75,12 @@
     <ClInclude Include="ConsoleScanningProgressObserver.h">
       <Filter>Header Files\ScanningProgressObserver</Filter>
     </ClInclude>
+    <ClInclude Include="SearchGoalStrategyFactory.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="TraversingStrategyFactory.h">
+      <Filter>Header Files\TraversingStrategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -97,6 +103,15 @@
     </ClCompile>
     <ClCompile Include="FindLargestFoldersStrategy.cpp">
       <Filter>Source Files\SearchGoalStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchGoalStrategyFactory.cpp">
+      <Filter>Source Files\SearchGoalStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="TraversingStrategyFactory.cpp">
+      <Filter>Source Files\TraversingStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemScanner.cpp">
+      <Filter>Source Files\FileSystemScanner</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

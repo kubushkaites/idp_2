@@ -2,8 +2,9 @@
 //
 
 #include "pch.h"
+#include "ConsoleScanningProgressObserver.h"
 #include "ScannerArgumentsProvider.h"
-
+#include "FileSystemScanner.h"
 
 int main()
 {
@@ -56,7 +57,9 @@ int main()
 	}
 
 	ScannerArgumentsProvider::Instance().parseArguments(std::move(scannerArguments));
-
+	auto scanningProgressObserver = ScanningProgressObserverSharedPtr(new ConsoleScanningProgressObserver());
+	auto fsScanner = FileSystemScanner(scanningProgressObserver);
+	fsScanner.Scan();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

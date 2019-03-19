@@ -161,11 +161,14 @@
     <ClInclude Include="ITraversingStrategy.h" />
     <ClInclude Include="ScannerArgumentsProvider.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SearchGoalStrategyFactory.h" />
+    <ClInclude Include="TraversingStrategyFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BreadthTraversingStrategy.cpp" />
     <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
     <ClCompile Include="FileSystemObject.cpp" />
+    <ClCompile Include="FileSystemScanner.cpp" />
     <ClCompile Include="FindLargestFoldersStrategy.cpp" />
     <ClCompile Include="idp2.cpp" />
     <ClCompile Include="pch.cpp">
@@ -175,6 +178,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ScannerArgumentsProvider.cpp" />
+    <ClCompile Include="SearchGoalStrategyFactory.cpp" />
+    <ClCompile Include="TraversingStrategyFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
