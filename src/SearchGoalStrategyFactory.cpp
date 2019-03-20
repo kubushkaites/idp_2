@@ -5,7 +5,7 @@
 
 SearchGoalStrategySharedPtr SearchGoalStrategyFactory::createSearchGoalStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
 {
-	SearchGoalStrategySharedPtr searchGoalStrategy = nullptr;
+	SearchGoalStrategySharedPtr searchGoalStrategy;
 	auto scannerArgumentsProvider = ScannerArgumentsProvider::Instance();
 	switch (scannerArgumentsProvider.getSearchGoal())
 	{

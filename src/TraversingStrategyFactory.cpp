@@ -3,10 +3,11 @@
 #include "TraversingStrategyFactory.h"
 #include "ISearchGoalStrategy.h"
 #include "BreadthTraversingStrategy.h"
+#include "DepthTraversingStrategy.h"
 
-TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategyFactory(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
+TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
 {
-	TraversingStrategySharedPtr traversingStrategy = nullptr;
+	TraversingStrategySharedPtr traversingStrategy;
 	auto scannerArgumentsProvider = ScannerArgumentsProvider::Instance();
 	switch (scannerArgumentsProvider.getTraverseMode())
 	{
@@ -14,6 +15,10 @@ TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategyF
 		{
 			traversingStrategy = TraversingStrategySharedPtr(new BreadthTraversingStrategy(searchGoalStrategy, scanningProgressObserver, scannerArgumentsProvider.getStartSearchPath()));
 			break;
+		}
+		case TraverseMode::DEPTH:
+		{
+			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(searchGoalStrategy, scanningProgressObserver, scannerArgumentsProvider.getStartSearchPath()));
 		}
 		default:
 		{

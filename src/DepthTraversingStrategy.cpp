@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "BreadthTraversingStrategy.h"
+#include "DepthTraversingStrategy.h"
 
-BreadthTraversingStrategy::BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring & traversingStartPath)
+DepthTraversingStrategy::DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring & traversingStartPath)
 	: searchGoalStrategy(searchGoalStrategy),
-	  scanningProgressObserver(scanningProgressObserver),
-      traversingStartPath(traversingStartPath)
+	scanningProgressObserver(scanningProgressObserver),
+	traversingStartPath(traversingStartPath)
 {
 
 }
 
-void BreadthTraversingStrategy::traverse(const std::wstring & nextDir)
+void DepthTraversingStrategy::traverse(const std::wstring & nextDir)
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;

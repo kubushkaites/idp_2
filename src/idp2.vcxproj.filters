@@ -81,6 +81,9 @@
     <ClInclude Include="TraversingStrategyFactory.h">
       <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="DepthTraversingStrategy.h">
+      <Filter>Header Files\TraversingStrategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="FileSystemScanner.cpp">
       <Filter>Source Files\FileSystemScanner</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthTraversingStrategy.cpp">
+      <Filter>Source Files\TraversingStrategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

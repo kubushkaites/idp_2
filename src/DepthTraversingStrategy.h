@@ -3,15 +3,14 @@
 #include "ISearchGoalStrategy.h"
 #include "IScanningProgressObserver.h"
 
-class BreadthTraversingStrategy : public ITraversingStrategy
+class DepthTraversingStrategy : public ITraversingStrategy
 {
 public:
-	BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring& traversingStartPath);
+	DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring& traversingStartPath);
 	virtual void traverse(const std::wstring& nextDir) override;
-	virtual ~BreadthTraversingStrategy() {};
+	virtual ~DepthTraversingStrategy() {};
 private:
 	SearchGoalStrategySharedPtr searchGoalStrategy;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 	std::wstring traversingStartPath;
-	std::wstring nextSearchDir;
 };

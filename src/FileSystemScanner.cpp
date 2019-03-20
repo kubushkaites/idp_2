@@ -3,10 +3,8 @@
 
 FileSystemScanner::FileSystemScanner(ScanningProgressObserverSharedPtr scanningProgressObserver)
 {
-	//auto searchGoalStrategyFactory = SearchGoalStrategyFactory();
 	searchGoalStrategy = SearchGoalStrategyFactory::createSearchGoalStrategy(scanningProgressObserver);
-	//auto traversingStrategyFactory = TraversingStrategyFactory();
-	traversingStrategy = TraversingStrategyFactory::createTraversingStrategyFactory(searchGoalStrategy, scanningProgressObserver);
+	traversingStrategy = TraversingStrategyFactory::createTraversingStrategy(searchGoalStrategy, scanningProgressObserver);
 }
 
 void FileSystemScanner::Scan()

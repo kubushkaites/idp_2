@@ -23,7 +23,7 @@ int main()
 	scannerArguments[ScannerArgumentsProviderConstants::traversingStartPath] = traversingStartPath;
 
 	std::cout << "Choose traverse mode:" << std::endl << "1 - Breadth traverse mode" << std::endl << "2 - Depth traverse mode" << std::endl
-			  <<"3 - Alphabetical traverse mode";
+			  <<"3 - Alphabetical traverse mode" << std::endl;
 	std::wstring traverseMode;
 	std::getline(std::wcin, traverseMode);
 	scannerArguments[ScannerArgumentsProviderConstants::traverseMode] = traverseModeMatches.at(traverseMode);

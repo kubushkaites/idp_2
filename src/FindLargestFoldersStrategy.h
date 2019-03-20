@@ -10,5 +10,5 @@ public:
 	virtual ~FindLargestFoldersStrategy() {};
 private:
 	int amountOfFoldersToFind = 0;
-	ScanningProgressObserverSharedPtr scanningProgressObserver = nullptr;
+	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };
