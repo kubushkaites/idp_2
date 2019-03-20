@@ -6,12 +6,10 @@
 class BreadthTraversingStrategy : public ITraversingStrategy
 {
 public:
-	BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring& traversingStartPath);
-	virtual void traverse(const std::wstring& nextDir) override;
+	BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver);
+	virtual void traverse(const std::wstring& traverseDir) override;
 	virtual ~BreadthTraversingStrategy() {};
 private:
 	SearchGoalStrategySharedPtr searchGoalStrategy;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
-	std::wstring traversingStartPath;
-	std::wstring nextSearchDir;
 };

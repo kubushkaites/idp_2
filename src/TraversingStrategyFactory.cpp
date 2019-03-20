@@ -13,12 +13,12 @@ TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(
 	{
 		case TraverseMode::BREADTH:
 		{
-			traversingStrategy = TraversingStrategySharedPtr(new BreadthTraversingStrategy(searchGoalStrategy, scanningProgressObserver, scannerArgumentsProvider.getStartSearchPath()));
+			traversingStrategy = TraversingStrategySharedPtr(new BreadthTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
 			break;
 		}
 		case TraverseMode::DEPTH:
 		{
-			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(searchGoalStrategy, scanningProgressObserver, scannerArgumentsProvider.getStartSearchPath()));
+			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
 		}
 		default:
 		{

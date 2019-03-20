@@ -1,23 +1,22 @@
 #include "pch.h"
 #include "DepthTraversingStrategy.h"
 
-DepthTraversingStrategy::DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const std::wstring & traversingStartPath)
+DepthTraversingStrategy::DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: searchGoalStrategy(searchGoalStrategy),
-	scanningProgressObserver(scanningProgressObserver),
-	traversingStartPath(traversingStartPath)
+	scanningProgressObserver(scanningProgressObserver)
 {
 
 }
 
-void DepthTraversingStrategy::traverse(const std::wstring & nextDir)
+void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	std::wcout << L"Current traverse path: " << nextDir << std::endl;
+	std::wcout << L"Current traverse path: " << traverseDir << std::endl;
 
-	auto currentSearchDir = nextDir + L"*";
-	hFind = FindFirstFileEx(currentSearchDir.c_str(), FindExInfoStandard, &FindFileData,
+	auto currentTraverseDir = traverseDir + L"*";
+	hFind = FindFirstFileEx(currentTraverseDir.c_str(), FindExInfoStandard, &FindFileData,
 		FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
 
 	DWORD directorySize = 0;
@@ -38,12 +37,12 @@ void DepthTraversingStrategy::traverse(const std::wstring & nextDir)
 				if ((wcscmp(FindFileData.cFileName, L".") != 0) && (wcscmp(FindFileData.cFileName, L"..") != 0))
 				{
 					std::wcout << "Found dir: " << FindFileData.cFileName << std::endl;
-					subDirsList.emplace_back(nextDir + FindFileData.cFileName + L"\\");
+					subDirsList.emplace_back(traverseDir + FindFileData.cFileName + L"\\");
 				}
 			}
 		} while (FindNextFile(hFind, &FindFileData));
 		std::cout << "Directory size (bytes): " << directorySize << std::endl;
-		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(nextDir, nextDir, directorySize));
+		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(traverseDir, traverseDir, directorySize));
 		searchGoalStrategy->performSearchGoalAction(fileSystemObject);
 		while (subDirsList.size() != 0)
 		{

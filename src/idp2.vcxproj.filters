@@ -84,6 +84,9 @@
     <ClInclude Include="DepthTraversingStrategy.h">
       <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="FileSystemDirectory.h">
+      <Filter>Header Files\FileSystemScanner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

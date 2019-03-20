@@ -95,6 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(VCToolsInstallDir)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,6 +111,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(DevEnvDir)VC\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,6 +156,7 @@
     <ClInclude Include="BreadthTraversingStrategy.h" />
     <ClInclude Include="ConsoleScanningProgressObserver.h" />
     <ClInclude Include="DepthTraversingStrategy.h" />
+    <ClInclude Include="FileSystemDirectory.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
