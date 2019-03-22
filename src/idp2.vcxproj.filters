@@ -84,8 +84,8 @@
     <ClInclude Include="DepthTraversingStrategy.h">
       <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystemDirectory.h">
-      <Filter>Header Files\FileSystemScanner</Filter>
+    <ClInclude Include="AlphabeticalTraversingStrategy.h">
+      <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +120,9 @@
       <Filter>Source Files\FileSystemScanner</Filter>
     </ClCompile>
     <ClCompile Include="DepthTraversingStrategy.cpp">
+      <Filter>Source Files\TraversingStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="AlphabeticalTraversingStrategy.cpp">
       <Filter>Source Files\TraversingStrategy</Filter>
     </ClCompile>
   </ItemGroup>

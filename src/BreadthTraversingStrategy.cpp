@@ -31,8 +31,11 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 			{
 				if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 				{
-					directorySize += (FindFileData.nFileSizeHigh * (MAXDWORD + 1)) + FindFileData.nFileSizeLow;
+					auto fileSize = (FindFileData.nFileSizeHigh * (MAXDWORD + 1)) + FindFileData.nFileSizeLow;
+					directorySize += fileSize;
 					std::wcout << "Found file: " << FindFileData.cFileName << std::endl;
+					auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextDir, FindFileData.cFileName, fileSize));
+					searchGoalStrategy->performSearchGoalAction(fileSystemObject);
 				}
 				else
 				{
@@ -51,6 +54,8 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		}
 		
 		std::wcout << L"Directory \"" << nextDir << L"\"size (bytes): " << directorySize << std::endl;
+		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, nextDir, nextDir, directorySize));
+		searchGoalStrategy->performSearchGoalAction(fileSystemObject);
 
 		if (subDirsList.size() != 0)
 		{			

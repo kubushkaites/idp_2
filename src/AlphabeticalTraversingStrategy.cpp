@@ -1,14 +1,13 @@
 #include "pch.h"
-#include "DepthTraversingStrategy.h"
+#include "AlphabeticalTraversingStrategy.h"
 
-DepthTraversingStrategy::DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
+AlphabeticalTraversingStrategy::AlphabeticalTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: searchGoalStrategy(searchGoalStrategy),
 	scanningProgressObserver(scanningProgressObserver)
 {
-
 }
 
-void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
+void AlphabeticalTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
@@ -49,6 +48,7 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		searchGoalStrategy->performSearchGoalAction(fileSystemObject);
 		while (subDirsList.size() != 0)
 		{
+			subDirsList.sort();
 			auto front = subDirsList.front();
 			std::wcout << L"-------------" << std::endl << L"Moving to next dir: " << front << std::endl << "-------------" << std::endl;
 			subDirsList.pop_front();

@@ -153,10 +153,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlphabeticalTraversingStrategy.h" />
     <ClInclude Include="BreadthTraversingStrategy.h" />
     <ClInclude Include="ConsoleScanningProgressObserver.h" />
     <ClInclude Include="DepthTraversingStrategy.h" />
-    <ClInclude Include="FileSystemDirectory.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
@@ -169,6 +169,7 @@
     <ClInclude Include="TraversingStrategyFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlphabeticalTraversingStrategy.cpp" />
     <ClCompile Include="BreadthTraversingStrategy.cpp" />
     <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
     <ClCompile Include="DepthTraversingStrategy.cpp" />

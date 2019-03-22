@@ -4,6 +4,7 @@
 #include "ISearchGoalStrategy.h"
 #include "BreadthTraversingStrategy.h"
 #include "DepthTraversingStrategy.h"
+#include "AlphabeticalTraversingStrategy.h"
 
 TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
 {
@@ -19,6 +20,12 @@ TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(
 		case TraverseMode::DEPTH:
 		{
 			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
+			break;
+		}
+		case TraverseMode::ALPABETICAL:
+		{
+			traversingStrategy = TraversingStrategySharedPtr(new AlphabeticalTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
+			break;
 		}
 		default:
 		{
