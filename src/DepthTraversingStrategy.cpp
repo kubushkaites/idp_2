@@ -33,7 +33,8 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 				directorySize += fileSize;
 				std::wcout << "Found file: " << FindFileData.cFileName << std::endl;
 				auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, traverseDir, FindFileData.cFileName, fileSize));
-				searchGoalStrategy->performSearchGoalAction(fileSystemObject);
+				fileSystemObjects.emplace_back(fileSystemObject);
+				/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
 			}
 			else
 			{
@@ -46,7 +47,8 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		} while (FindNextFile(hFind, &FindFileData));
 		std::cout << "Directory size (bytes): " << directorySize << std::endl;
 		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, traverseDir, traverseDir, directorySize));
-		searchGoalStrategy->performSearchGoalAction(fileSystemObject);
+		fileSystemObjects.emplace_back(fileSystemObject);
+		/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
 		while (subDirsList.size() != 0)
 		{
 			auto front = subDirsList.front();
@@ -61,4 +63,9 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		return;
 	}
 	FindClose(hFind);
+
+	if (subDirsList.size() == 0)
+	{
+		searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
+	}
 }

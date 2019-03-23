@@ -6,9 +6,10 @@ class FindLargestFoldersStrategy : public ISearchGoalStrategy
 {
 public:
 	FindLargestFoldersStrategy(const int amountOfFoldersToFind, ScanningProgressObserverSharedPtr scanningProgressObserver);
-	virtual void performSearchGoalAction(FileSystemObjectSharedPtr fileSystemObject) override;
+	virtual void performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects) override;
 	virtual ~FindLargestFoldersStrategy() {};
 private:
 	int amountOfFoldersToFind = 0;
+	std::vector<FileSystemObjectSharedPtr> foundDirectories;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };

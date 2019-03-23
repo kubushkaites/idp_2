@@ -10,6 +10,7 @@ public:
 	virtual void traverse(const std::wstring& traverseDir) override;
 	virtual ~BreadthTraversingStrategy() {};
 private:
+	std::list<FileSystemObjectSharedPtr> fileSystemObjects;
 	SearchGoalStrategySharedPtr searchGoalStrategy;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };

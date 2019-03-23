@@ -12,8 +12,8 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
 	std::wcout << L"Current traverse path: " << traverseDir << std::endl;
 
-	auto nextDir = traverseDir;
-	auto nextSearchDir = nextDir + L"*";
+	auto nextSearchDir = traverseDir;
+	auto nextSearchDirWithWildCard = nextSearchDir + L"*";
 
 	std::list<std::wstring> subDirsList;
 
@@ -23,7 +23,7 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		DWORD directorySize = 0;
 		WIN32_FIND_DATA FindFileData;
 		HANDLE hFind;
-		hFind = FindFirstFileEx(nextSearchDir.c_str(), FindExInfoStandard, &FindFileData,
+		hFind = FindFirstFileEx(nextSearchDirWithWildCard.c_str(), FindExInfoStandard, &FindFileData,
 			FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
 		if (hFind != INVALID_HANDLE_VALUE)
 		{
@@ -34,15 +34,16 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 					auto fileSize = (FindFileData.nFileSizeHigh * (MAXDWORD + 1)) + FindFileData.nFileSizeLow;
 					directorySize += fileSize;
 					std::wcout << "Found file: " << FindFileData.cFileName << std::endl;
-					auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextDir, FindFileData.cFileName, fileSize));
-					searchGoalStrategy->performSearchGoalAction(fileSystemObject);
+					auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextSearchDir, FindFileData.cFileName, fileSize));
+					fileSystemObjects.emplace_back(fileSystemObject);
+					/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
 				}
 				else
 				{
 					if ((wcscmp(FindFileData.cFileName, L".") != 0) && (wcscmp(FindFileData.cFileName, L"..") != 0))
 					{
 						std::wcout << "Found dir: " << FindFileData.cFileName << std::endl;
-						subDirsList.emplace_back(nextDir + FindFileData.cFileName + L"\\");
+						subDirsList.emplace_back(nextSearchDir + FindFileData.cFileName + L"\\");
 					}
 				}
 			} while (FindNextFile(hFind, &FindFileData));
@@ -53,15 +54,16 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 			return;
 		}
 		
-		std::wcout << L"Directory \"" << nextDir << L"\"size (bytes): " << directorySize << std::endl;
-		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, nextDir, nextDir, directorySize));
-		searchGoalStrategy->performSearchGoalAction(fileSystemObject);
+		std::wcout << L"Directory \"" << nextSearchDir << L"\"size (bytes): " << directorySize << std::endl;
+		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, nextSearchDir, nextSearchDir, directorySize));
+		fileSystemObjects.emplace_back(fileSystemObject);
+		/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
 
 		if (subDirsList.size() != 0)
 		{			
-			nextDir = subDirsList.front();
-			nextSearchDir = nextDir + L"*";
-			std::wcout << L"-------------" << std::endl << L"Moving to next dir: " << nextDir << std::endl << "-------------" << std::endl;
+			nextSearchDir = subDirsList.front();
+			nextSearchDirWithWildCard = nextSearchDir + L"*";
+			std::wcout << L"-------------" << std::endl << L"Moving to next dir: " << nextSearchDir << std::endl << "-------------" << std::endl;
 			subDirsList.pop_front();
 		}
 		else
@@ -70,4 +72,5 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		}
 		FindClose(hFind);
 	} while (continueSearch);
+	searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
 }
