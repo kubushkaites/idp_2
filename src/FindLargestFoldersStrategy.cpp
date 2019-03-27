@@ -11,34 +11,42 @@ FindLargestFoldersStrategy::FindLargestFoldersStrategy(const int amountOfFolders
 
 void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
 {
-	static bool isSorted = false;
+	auto foundDirectoriesCounter = 0;
 	for(auto& fileSystemObject : fileSystemObjects)
 	{
 		if (fileSystemObject->getFileSystemObjectType() == FileSystemObjectType::Directory)
 		{
-			if (foundDirectories.size() != amountOfFoldersToFind)
+			if (foundDirectoriesCounter < amountOfFoldersToFind)
 			{
-				foundDirectories.push_back(fileSystemObject);
+				foundDirectories[foundDirectoriesCounter] = fileSystemObject;
+				++foundDirectoriesCounter;
 			}
-			else
+
+			if (foundDirectoriesSorted == false && foundDirectoriesCounter == amountOfFoldersToFind)
 			{
-				if (isSorted == false)
+				std::sort(foundDirectories.begin(), foundDirectories.end(), [](FileSystemObjectSharedPtr& dirLeft, FileSystemObjectSharedPtr& dirRight)
 				{
-					std::sort(foundDirectories.begin(), foundDirectories.end(),[] )
+					return dirLeft->getFileSystemObjectSize() > dirRight->getFileSystemObjectSize();
+				});
+				foundDirectoriesSorted = true;
+			}
+			else if(foundDirectoriesSorted && foundDirectoriesCounter == amountOfFoldersToFind)
+			{
+				auto it = std::find_if(foundDirectories.begin(), foundDirectories.end(), [fileSystemObject](FileSystemObjectSharedPtr& fsObject)
+				{
+					return fileSystemObject->getFileSystemObjectSize() > fsObject->getFileSystemObjectSize();
+				});
+				if (it != foundDirectories.end())
+				{
+					*it = fileSystemObject;
+					auto itIdx = it - foundDirectories.begin();
+					for (auto idx = foundDirectories.size() - 1; idx > itIdx; idx--)
+					{
+						foundDirectories[idx] = foundDirectories[idx - 1];
+					}				
 				}
-			}			
+			}					
 		}
 	}
-	/*if (fileSystemObjects->getFileSystemObjectType() == FileSystemObjectType::Directory)
-	{
-		if (foundDirectories.size() != amountOfFoldersToFind)
-		{
-			foundDirectories.push_back(fileSystemObject);
-		}
-		else
-		{	
-			if (isSorted == false)
-				foundDirectories.sort();
-		}
-	}*/
+	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, foundDirectories);
 }

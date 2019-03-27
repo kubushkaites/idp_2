@@ -11,6 +11,6 @@ class IScanningProgressObserver
 {
 public:
 	virtual void onScanningProgress(const std::wstring& currentlyScanningDirectory, const std::wstring& currentlyScanningFileSystemObject) = 0;
-	virtual void onScanningResult(SearchGoal searchGoal, const std::list<FileSystemObject>& objectsMatchingToChosenSearchGoal) = 0;
+	virtual void onScanningResult(SearchGoal searchGoal, const std::vector<FileSystemObjectSharedPtr>& objectsMatchingToChosenSearchGoal) = 0;
 	virtual ~IScanningProgressObserver() {};
 };

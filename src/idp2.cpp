@@ -8,6 +8,7 @@
 
 int main()
 {
+	std::locale::global(std::locale(""));
 	std::map<std::wstring, std::wstring> traverseModeMatches = { {L"1", ScannerArgumentsProviderConstants::breadthTraverseMode}, 
 																{L"2", ScannerArgumentsProviderConstants::depthTraverseMode}, 
 																{L"3", ScannerArgumentsProviderConstants::alphabeticalTraverseMode} };
