@@ -91,6 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,6 +160,7 @@
     <ClInclude Include="DepthTraversingStrategy.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
+    <ClInclude Include="FindLargestFileStrategy.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
     <ClInclude Include="IScanningProgressObserver.h" />
     <ClInclude Include="ISearchGoalStrategy.h" />
@@ -175,6 +177,7 @@
     <ClCompile Include="DepthTraversingStrategy.cpp" />
     <ClCompile Include="FileSystemObject.cpp" />
     <ClCompile Include="FileSystemScanner.cpp" />
+    <ClCompile Include="FindLargestFileStrategy.cpp" />
     <ClCompile Include="FindLargestFoldersStrategy.cpp" />
     <ClCompile Include="idp2.cpp" />
     <ClCompile Include="pch.cpp">

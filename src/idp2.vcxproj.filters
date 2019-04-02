@@ -87,6 +87,9 @@
     <ClInclude Include="AlphabeticalTraversingStrategy.h">
       <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="FindLargestFileStrategy.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="AlphabeticalTraversingStrategy.cpp">
       <Filter>Source Files\TraversingStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="FindLargestFileStrategy.cpp">
+      <Filter>Source Files\SearchGoalStrategy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

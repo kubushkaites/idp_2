@@ -37,16 +37,16 @@ void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSys
 					return fileSystemObject->getFileSystemObjectSize() > fsObject->getFileSystemObjectSize();
 				});
 				if (it != foundDirectories.end())
-				{
-					*it = fileSystemObject;
+				{					
 					auto itIdx = it - foundDirectories.begin();
 					for (auto idx = foundDirectories.size() - 1; idx > itIdx; idx--)
 					{
 						foundDirectories[idx] = foundDirectories[idx - 1];
-					}				
+					}
+					*it = fileSystemObject;
 				}
 			}					
 		}
 	}
-	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, foundDirectories);
+	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, &foundDirectories/*FileSystemObjectsCollection{ foundDirectories }*/);
 }

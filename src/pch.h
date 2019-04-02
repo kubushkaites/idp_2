@@ -27,7 +27,9 @@
 #include <stdint.h>
 #include <string>
 #include <list>
+#include <any>
 #include <set>
+#include <variant>
 #include <vector>
 #include <iostream>
 #include <memory>

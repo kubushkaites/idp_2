@@ -13,6 +13,11 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
+	if (initialTraversingDir.empty())
+	{
+		initialTraversingDir = traverseDir;
+	}
+
 	std::wcout << L"Current traverse path: " << traverseDir << std::endl;
 
 	auto currentTraverseDir = traverseDir + L"*";
@@ -34,7 +39,6 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 				std::wcout << "Found file: " << FindFileData.cFileName << std::endl;
 				auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, traverseDir, FindFileData.cFileName, fileSize));
 				fileSystemObjects.emplace_back(fileSystemObject);
-				/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
 			}
 			else
 			{
@@ -48,7 +52,7 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		std::cout << "Directory size (bytes): " << directorySize << std::endl;
 		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, traverseDir, traverseDir, directorySize));
 		fileSystemObjects.emplace_back(fileSystemObject);
-		/*searchGoalStrategy->performSearchGoalAction(fileSystemObject);*/
+
 		while (subDirsList.size() != 0)
 		{
 			auto front = subDirsList.front();
@@ -64,7 +68,7 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 	}
 	FindClose(hFind);
 
-	if (subDirsList.size() == 0)
+	if (initialTraversingDir == traverseDir)
 	{
 		searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
 	}
