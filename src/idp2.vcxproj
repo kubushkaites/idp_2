@@ -157,9 +157,11 @@
     <ClInclude Include="AlphabeticalTraversingStrategy.h" />
     <ClInclude Include="BreadthTraversingStrategy.h" />
     <ClInclude Include="ConsoleScanningProgressObserver.h" />
+    <ClInclude Include="DeleteFilesByNameStrategy.h" />
     <ClInclude Include="DepthTraversingStrategy.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
+    <ClInclude Include="FindFilesByExtensionStrategy.h" />
     <ClInclude Include="FindLargestFileStrategy.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
     <ClInclude Include="IScanningProgressObserver.h" />
@@ -174,9 +176,11 @@
     <ClCompile Include="AlphabeticalTraversingStrategy.cpp" />
     <ClCompile Include="BreadthTraversingStrategy.cpp" />
     <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
+    <ClCompile Include="DeleteFilesByNameStrategy.cpp" />
     <ClCompile Include="DepthTraversingStrategy.cpp" />
     <ClCompile Include="FileSystemObject.cpp" />
     <ClCompile Include="FileSystemScanner.cpp" />
+    <ClCompile Include="FindFilesByExtensionStrategy.cpp" />
     <ClCompile Include="FindLargestFileStrategy.cpp" />
     <ClCompile Include="FindLargestFoldersStrategy.cpp" />
     <ClCompile Include="idp2.cpp" />

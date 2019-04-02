@@ -2,31 +2,70 @@
 #include "ConsoleScanningProgressObserver.h"
 
 
+void ConsoleScanningProgressObserver::onLargestFoldersFound(std::any largestFolders)
+{
+	std::cout << "Largest folders found: " << std::endl;
+	auto folders = std::any_cast<std::vector<FileSystemObjectSharedPtr>*>(largestFolders);
+	for (auto& folder : *folders)
+	{
+		printFileSystemObjectInfo(folder);
+	}
+}
+
+void ConsoleScanningProgressObserver::onLargestFileFound(std::any largestFile)
+{
+	std::cout << "Largest file found: " << std::endl;
+	auto file = std::any_cast<FileSystemObjectSharedPtr>(largestFile);
+	printFileSystemObjectInfo(file);
+}
+
+void ConsoleScanningProgressObserver::onFilesByExtensionFound(std::any filesByExtension)
+{
+	std::wcout << L"Files with extension \"" << ScannerArgumentsProvider::Instance().getSearchFileExtension() <<L"\" found: " << std::endl;
+	auto files = std::any_cast<std::list<FileSystemObjectSharedPtr>*>(filesByExtension);
+	for (auto& file : *files)
+	{
+		printFileSystemObjectInfo(file);
+	}
+}
+
+void ConsoleScanningProgressObserver::onDeletedFilesByName(std::any deletedFilesByName)
+{
+}
+
+void ConsoleScanningProgressObserver::printFileSystemObjectInfo(FileSystemObjectSharedPtr fsObject)
+{
+	std::cout << "-----------------------------" << std::endl;
+	std::wcout << L"File system object path: " << fsObject->getFileSystemObjectPath() << std::endl;
+	std::wcout << L"File system object name: " << fsObject->getFileSystemObjectName() << std::endl;
+	std::wcout << L"File system object size(bytes): " << fsObject->getFileSystemObjectSize() << std::endl;
+	std::cout << "-----------------------------" << std::endl;
+}
+
 void ConsoleScanningProgressObserver::onScanningProgress(const std::wstring & currentlyScanningDirectory, const std::wstring & currentlyScanningFileSystemObject)
 {
 
 }
 
-void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, std::any objectsMatchingToChosenSearchGoal/*FileSystemObjectsCollection objectsMatchingToChosenSearchGoal*/)
+
+
+void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, std::any objectsMatchingChosenSearchGoal)
 {
-	//const std::vector<FileSystemObjectSharedPtr>* vec;
-	//const FileS
-	//const std::list<FileSystemObjectSharedPtr>* lis;
 	if (searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
 	{
-		std::cout << "Largest folders found: " << std::endl;
-		auto vec = std::any_cast<std::vector<FileSystemObjectSharedPtr>*>(objectsMatchingToChosenSearchGoal);
-		for (auto& fsObj : *vec)
-		{
-			std::cout << "-----------------------------" << std::endl;
-			std::wcout << L"File system object path: " << fsObj->getFileSystemObjectPath() << std::endl;
-			std::wcout << L"File system object name: " << fsObj->getFileSystemObjectName() << std::endl;
-			std::wcout << L"File system object size(bytes): " << fsObj->getFileSystemObjectSize() << std::endl;
-			std::cout << "-----------------------------" << std::endl;
-		}
+		onLargestFoldersFound(objectsMatchingChosenSearchGoal);
+		
 	}
 	else if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
 	{
-		/*FileSystemObjectSharedPtr fsObject = std::any_cast<*/
+		onLargestFileFound(objectsMatchingChosenSearchGoal);
+	}
+	else if (searchGoal == SearchGoal::FIND_FILES_BY_EXTENSION)
+	{
+		onFilesByExtensionFound(objectsMatchingChosenSearchGoal);
+	}
+	else if (searchGoal == SearchGoal::DELETE_FILE)
+	{
+		onDeletedFilesByName(objectsMatchingChosenSearchGoal);
 	}
 }

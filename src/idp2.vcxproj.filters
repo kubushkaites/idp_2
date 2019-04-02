@@ -90,6 +90,12 @@
     <ClInclude Include="FindLargestFileStrategy.h">
       <Filter>Header Files\SearchGoalStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="DeleteFilesByNameStrategy.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="FindFilesByExtensionStrategy.h">
+      <Filter>Header Files\SearchGoalStrategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -129,6 +135,12 @@
       <Filter>Source Files\TraversingStrategy</Filter>
     </ClCompile>
     <ClCompile Include="FindLargestFileStrategy.cpp">
+      <Filter>Source Files\SearchGoalStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="DeleteFilesByNameStrategy.cpp">
+      <Filter>Source Files\SearchGoalStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="FindFilesByExtensionStrategy.cpp">
       <Filter>Source Files\SearchGoalStrategy</Filter>
     </ClCompile>
   </ItemGroup>

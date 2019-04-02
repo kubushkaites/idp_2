@@ -3,12 +3,13 @@
 #include "IScanningProgressObserver.h"
 
 
-class FindLargestFileStrategy : public ISearchGoalStrategy
+class FindFilesByExtensionStrategy : public ISearchGoalStrategy
 {
 public:
-	FindLargestFileStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver);
+	FindFilesByExtensionStrategy(std::wstring fileExtension, ScanningProgressObserverSharedPtr scanningProgressObserver);
 	virtual void performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects) override;
-	virtual ~FindLargestFileStrategy() {};
+	virtual ~FindFilesByExtensionStrategy() {};
 private:
+	std::wstring fileExtension;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };

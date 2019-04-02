@@ -2,13 +2,14 @@
 #include "ISearchGoalStrategy.h"
 #include "IScanningProgressObserver.h"
 
-
-class FindLargestFileStrategy : public ISearchGoalStrategy
+class DeleteFilesByNameStrategy : public ISearchGoalStrategy
 {
 public:
-	FindLargestFileStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver);
+	DeleteFilesByNameStrategy(std::wstring fileNameToDelete, ScanningProgressObserverSharedPtr scanningProgressObserver);
 	virtual void performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects) override;
-	virtual ~FindLargestFileStrategy() {};
+	virtual ~DeleteFilesByNameStrategy() {};
 private:
+	std::wstring fileNameToDelete;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };
+

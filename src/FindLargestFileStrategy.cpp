@@ -17,12 +17,11 @@ void FindLargestFileStrategy::performSearchGoalAction(const std::list<FileSystem
 			{
 				largestFile = fsObject;
 			}
-			else if(largestFile->getFileSystemObjectSize() < fsObject->getFileSystemObjectSize())
+			else if (largestFile->getFileSystemObjectSize() < fsObject->getFileSystemObjectSize())
 			{
 				largestFile = fsObject;
 			}
 		}
 	}
-	std::vector<FileSystemObjectSharedPtr> tmpVec{ largestFile };
-	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FILE, tmpVec);
+	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FILE, largestFile);
 }
