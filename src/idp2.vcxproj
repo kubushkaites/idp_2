@@ -154,7 +154,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AlphabeticalTraversingStrategy.h" />
     <ClInclude Include="BreadthTraversingStrategy.h" />
     <ClInclude Include="ConsoleScanningProgressObserver.h" />
     <ClInclude Include="DeleteFilesByNameStrategy.h" />
@@ -173,7 +172,6 @@
     <ClInclude Include="TraversingStrategyFactory.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AlphabeticalTraversingStrategy.cpp" />
     <ClCompile Include="BreadthTraversingStrategy.cpp" />
     <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
     <ClCompile Include="DeleteFilesByNameStrategy.cpp" />

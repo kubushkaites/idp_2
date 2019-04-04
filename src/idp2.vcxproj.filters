@@ -84,9 +84,6 @@
     <ClInclude Include="DepthTraversingStrategy.h">
       <Filter>Header Files\TraversingStrategy</Filter>
     </ClInclude>
-    <ClInclude Include="AlphabeticalTraversingStrategy.h">
-      <Filter>Header Files\TraversingStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="FindLargestFileStrategy.h">
       <Filter>Header Files\SearchGoalStrategy</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
       <Filter>Source Files\FileSystemScanner</Filter>
     </ClCompile>
     <ClCompile Include="DepthTraversingStrategy.cpp">
-      <Filter>Source Files\TraversingStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="AlphabeticalTraversingStrategy.cpp">
       <Filter>Source Files\TraversingStrategy</Filter>
     </ClCompile>
     <ClCompile Include="FindLargestFileStrategy.cpp">

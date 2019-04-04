@@ -10,7 +10,8 @@ private:
 	void onDeletedFilesByName(std::any deletedFilesByName);
 	void printFileSystemObjectInfo(FileSystemObjectSharedPtr fsObject);
 public:
-	virtual void onScanningProgress(const std::wstring& currentlyScanningDirectory, const std::wstring& currentlyScanningFileSystemObject) override;
-	virtual void onScanningResult(SearchGoal searchGoal, /*FileSystemObjectsCollection objectsMatchingToChosenSearchGoal*/ std::any objectsMatchingToChosenSearchGoal) override;
+	virtual void onScanningProgress(const std::wstring& message) override;
+	virtual void onScanningErrorOccurred(const std::wstring& errorMessage) override;
+	virtual void onScanningResult(SearchGoal searchGoal, std::any objectsMatchingToChosenSearchGoal) override;
 	virtual ~ConsoleScanningProgressObserver() {};
 };

@@ -28,6 +28,7 @@
 #include <string>
 #include <list>
 #include <any>
+#include <sstream>
 #include <set>
 #include <variant>
 #include <vector>

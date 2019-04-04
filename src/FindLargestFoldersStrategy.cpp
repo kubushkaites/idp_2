@@ -48,5 +48,5 @@ void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSys
 			}					
 		}
 	}
-	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, &foundDirectories/*FileSystemObjectsCollection{ foundDirectories }*/);
+	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, &foundDirectories);
 }

@@ -10,10 +10,12 @@ BreadthTraversingStrategy::BreadthTraversingStrategy(SearchGoalStrategySharedPtr
 
 void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
-	std::wcout << L"Current traverse path: " << traverseDir << std::endl;
+	std::wstringstream logStream;
+	logStream << L"Current traverse path: " + traverseDir;
+	scanningProgressObserver->onScanningProgress(L"Current traverse path: " + traverseDir);
 
-	auto nextSearchDir = traverseDir;
-	auto nextSearchDirWithWildCard = nextSearchDir + L"*";
+	auto nextSearchPath = traverseDir;
+	auto nextSearchPathWithWildCard = nextSearchPath + L"*";
 
 	std::list<std::wstring> subDirsList;
 
@@ -23,7 +25,7 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		DWORD directorySize = 0;
 		WIN32_FIND_DATA FindFileData;
 		HANDLE hFind;
-		hFind = FindFirstFileEx(nextSearchDirWithWildCard.c_str(), FindExInfoStandard, &FindFileData,
+		hFind = FindFirstFileEx(nextSearchPathWithWildCard.c_str(), FindExInfoStandard, &FindFileData,
 			FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
 		if (hFind != INVALID_HANDLE_VALUE)
 		{
@@ -33,35 +35,48 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 				{
 					auto fileSize = (FindFileData.nFileSizeHigh * (MAXDWORD + 1)) + FindFileData.nFileSizeLow;
 					directorySize += fileSize;
-					std::wcout << "Found file: " << FindFileData.cFileName << std::endl;
-					auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextSearchDir, FindFileData.cFileName, fileSize));
+					{
+						logStream.str(L"");
+						logStream << L"Found file: " << FindFileData.cFileName << std::endl;
+						scanningProgressObserver->onScanningProgress(logStream.str());
+					}
+					auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextSearchPath, FindFileData.cFileName, fileSize));
 					fileSystemObjects.emplace_back(fileSystemObject);
 				}
 				else
 				{
 					if ((wcscmp(FindFileData.cFileName, L".") != 0) && (wcscmp(FindFileData.cFileName, L"..") != 0))
 					{
-						std::wcout << "Found dir: " << FindFileData.cFileName << std::endl;
-						subDirsList.emplace_back(nextSearchDir + FindFileData.cFileName + L"\\");
+						logStream.str(L"");
+						logStream << "Found dir: " << FindFileData.cFileName <<std::endl;
+						scanningProgressObserver->onScanningProgress(logStream.str());
+						subDirsList.emplace_back(nextSearchPath + FindFileData.cFileName + L"\\");
 					}
 				}
 			} while (FindNextFile(hFind, &FindFileData));
 		}
 		else
 		{
-			std::cout << "FindFirstFileEx failed " << GetLastError() << std::endl;
+			logStream.str(L"");
+			logStream << "FindFirstFileEx failed " << GetLastError() << std::endl;
+			scanningProgressObserver->onScanningErrorOccurred(logStream.str());
 			return;
 		}
-		
-		std::wcout << L"Directory \"" << nextSearchDir << L"\"size (bytes): " << directorySize << std::endl;
-		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, nextSearchDir, nextSearchDir, directorySize));
+
+		logStream.str(L"");
+		logStream << L"Directory \"" << nextSearchPath << L"\"size (bytes): " << directorySize << std::endl;
+		scanningProgressObserver->onScanningProgress(logStream.str());
+
+		auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::Directory, nextSearchPath, nextSearchPath, directorySize));
 		fileSystemObjects.emplace_back(fileSystemObject);
 
 		if (subDirsList.size() != 0)
-		{			
-			nextSearchDir = subDirsList.front();
-			nextSearchDirWithWildCard = nextSearchDir + L"*";
-			std::wcout << L"-------------" << std::endl << L"Moving to next dir: " << nextSearchDir << std::endl << "-------------" << std::endl;
+		{
+			nextSearchPath = subDirsList.front();
+			nextSearchPathWithWildCard = nextSearchPath + L"*";
+			logStream.str(L"");
+			logStream << L"-------------" << std::endl << L"Moving to next dir: " << nextSearchPath << std::endl << "-------------" << std::endl;
+			scanningProgressObserver->onScanningProgress(logStream.str());
 			subDirsList.pop_front();
 		}
 		else
@@ -70,6 +85,10 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		}
 		FindClose(hFind);
 	} while (continueSearch);
+
+	logStream = std::wstringstream();
+	logStream << L"Breadth traversing ended! Starting perform search goal action!" << std::endl;
+	scanningProgressObserver->onScanningProgress(logStream.str());
 
 	searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
 }

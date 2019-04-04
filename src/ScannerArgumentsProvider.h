@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 
-enum class TraverseMode { BREADTH, DEPTH, ALPABETICAL };
+enum class TraverseMode { BREADTH, DEPTH};
 
 enum class SearchGoal { FIND_LARGEST_FOLDERS, FIND_LARGEST_FILE, FIND_FILES_BY_EXTENSION, DELETE_FILE };
 
@@ -16,7 +16,6 @@ namespace ScannerArgumentsProviderConstants
 
 	static const std::wstring breadthTraverseMode = L"BREADTH";
 	static const std::wstring depthTraverseMode = L"DEPTH";
-	static const std::wstring alphabeticalTraverseMode = L"ALPHABETICAL";
 
 	static const std::wstring findLargestFoldersGoal = L"FIND_LARGEST_FOLDERS";
 	static const std::wstring findLargestFileGoal = L"FIND_LARGEST_FILE";
@@ -41,8 +40,7 @@ private:
 	TraverseMode traverseMode;
 	SearchGoal searchGoal;
 	std::map<std::wstring, TraverseMode> traverseModesMatches = {{ScannerArgumentsProviderConstants::breadthTraverseMode, TraverseMode::BREADTH}, 
-																{ScannerArgumentsProviderConstants::depthTraverseMode, TraverseMode::DEPTH}, 
-															    {ScannerArgumentsProviderConstants::alphabeticalTraverseMode, TraverseMode::ALPABETICAL}};
+																{ScannerArgumentsProviderConstants::depthTraverseMode, TraverseMode::DEPTH}};
 	std::map<std::wstring, SearchGoal> searchGoalMatches = {{ScannerArgumentsProviderConstants::findLargestFoldersGoal, SearchGoal::FIND_LARGEST_FOLDERS}, 
 															{ScannerArgumentsProviderConstants::findLargestFileGoal, SearchGoal::FIND_LARGEST_FILE},
 															{ScannerArgumentsProviderConstants::findFilesByExtensionGoal, SearchGoal::FIND_FILES_BY_EXTENSION}, 

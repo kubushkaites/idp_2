@@ -31,6 +31,12 @@ void ConsoleScanningProgressObserver::onFilesByExtensionFound(std::any filesByEx
 
 void ConsoleScanningProgressObserver::onDeletedFilesByName(std::any deletedFilesByName)
 {
+	std::wcout << L"The following files were deleted: " << std::endl;
+	auto files = std::any_cast<std::list<FileSystemObjectSharedPtr>*>(deletedFilesByName);
+	for (auto& file : *files)
+	{
+		printFileSystemObjectInfo(file);
+	}
 }
 
 void ConsoleScanningProgressObserver::printFileSystemObjectInfo(FileSystemObjectSharedPtr fsObject)
@@ -42,9 +48,14 @@ void ConsoleScanningProgressObserver::printFileSystemObjectInfo(FileSystemObject
 	std::cout << "-----------------------------" << std::endl;
 }
 
-void ConsoleScanningProgressObserver::onScanningProgress(const std::wstring & currentlyScanningDirectory, const std::wstring & currentlyScanningFileSystemObject)
+void ConsoleScanningProgressObserver::onScanningProgress(const std::wstring & message)
 {
+	std::wcout << message;
+}
 
+void ConsoleScanningProgressObserver::onScanningErrorOccurred(const std::wstring & errorMessage)
+{
+	std::wcout<<L"Scanning error occurred: "<<std::endl<<L"\""<<errorMessage<<L"\""<<std::endl;
 }
 
 

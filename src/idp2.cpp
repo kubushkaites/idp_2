@@ -10,8 +10,7 @@ int main()
 {
 	std::locale::global(std::locale(""));
 	std::map<std::wstring, std::wstring> traverseModeMatches = { {L"1", ScannerArgumentsProviderConstants::breadthTraverseMode}, 
-																{L"2", ScannerArgumentsProviderConstants::depthTraverseMode}, 
-																{L"3", ScannerArgumentsProviderConstants::alphabeticalTraverseMode} };
+																{L"2", ScannerArgumentsProviderConstants::depthTraverseMode}};
 	std::map<std::wstring, std::wstring> searchGoalMatches = { {L"1", ScannerArgumentsProviderConstants::findLargestFoldersGoal}, 
 															   {L"2", ScannerArgumentsProviderConstants::findLargestFileGoal}, 
 															   {L"3", ScannerArgumentsProviderConstants::findFilesByExtensionGoal},
@@ -23,8 +22,7 @@ int main()
 	std::getline(std::wcin, traversingStartPath);
 	scannerArguments[ScannerArgumentsProviderConstants::traversingStartPath] = traversingStartPath;
 
-	std::cout << "Choose traverse mode:" << std::endl << "1 - Breadth traverse mode" << std::endl << "2 - Depth traverse mode" << std::endl
-			  <<"3 - Alphabetical traverse mode" << std::endl;
+	std::cout << "Choose traverse mode:" << std::endl << "1 - Breadth traverse mode" << std::endl << "2 - Depth traverse mode" << std::endl;
 	std::wstring traverseMode;
 	std::getline(std::wcin, traverseMode);
 	scannerArguments[ScannerArgumentsProviderConstants::traverseMode] = traverseModeMatches.at(traverseMode);

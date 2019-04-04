@@ -12,6 +12,12 @@ void ScannerArgumentsProvider::parseArguments(std::map<std::wstring, std::wstrin
 	traverseMode = traverseModesMatches.at(arguments.at(ScannerArgumentsProviderConstants::traverseMode));
 	searchGoal = searchGoalMatches.at(arguments.at(ScannerArgumentsProviderConstants::searchGoal));
 	traversingStartPath = arguments.at(ScannerArgumentsProviderConstants::traversingStartPath);
+	
+	const wchar_t trailingSlash = L'\\';
+	if (traversingStartPath[traversingStartPath.size() - 1] != trailingSlash)
+	{
+		traversingStartPath += trailingSlash;
+	}
 
 	if (searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
 	{
