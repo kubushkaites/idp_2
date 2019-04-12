@@ -8,7 +8,6 @@ class DepthTraversingStrategy : public ITraversingStrategy
 public:
 	DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver);
 	virtual void traverse(const std::wstring& traverseDir) override;
-	virtual ~DepthTraversingStrategy() {};
 private:
 	std::wstring initialTraversingDir;
 	std::list<FileSystemObjectSharedPtr> fileSystemObjects;

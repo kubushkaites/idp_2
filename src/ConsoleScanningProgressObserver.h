@@ -13,5 +13,4 @@ public:
 	virtual void onScanningProgress(const std::wstring& message) override;
 	virtual void onScanningErrorOccurred(const std::wstring& errorMessage) override;
 	virtual void onScanningResult(SearchGoal searchGoal, std::any objectsMatchingToChosenSearchGoal) override;
-	virtual ~ConsoleScanningProgressObserver() {};
 };
