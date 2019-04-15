@@ -93,6 +93,9 @@
     <ClInclude Include="FindFilesByExtensionStrategy.h">
       <Filter>Header Files\SearchGoalStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="HandleWrapper.h">
+      <Filter>Header Files\FileSystemScanner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="FindFilesByExtensionStrategy.cpp">
       <Filter>Source Files\SearchGoalStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleWrapper.cpp">
+      <Filter>Source Files\FileSystemScanner</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

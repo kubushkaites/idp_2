@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "FileSystemObject.h"
 
-FileSystemObject::FileSystemObject(const FileSystemObjectType fsObjectType, const std::wstring & fileSystemObjectPath, const std::wstring & fileSystemObjectName, const DWORD & fileSystemObjectSize)
+FileSystemObject::FileSystemObject(const FileSystemObjectType fsObjectType, const std::wstring & fileSystemObjectPath, const std::wstring & fileSystemObjectName, const LONGLONG & fileSystemObjectSize)
 	: fsObjectType(fsObjectType),
 	fileSystemObjectPath(fileSystemObjectPath),
 	fileSystemObjectName(fileSystemObjectName),
@@ -14,7 +14,7 @@ FileSystemObjectType FileSystemObject::getFileSystemObjectType() const
 	return fsObjectType;
 }
 
-DWORD FileSystemObject::getFileSystemObjectSize() const
+LONGLONG FileSystemObject::getFileSystemObjectSize() const
 {
 	return fileSystemObjectSize;
 }

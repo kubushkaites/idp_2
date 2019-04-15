@@ -10,15 +10,15 @@ enum class FileSystemObjectType {Directory, File};
 class FileSystemObject
 {
 public:
-	FileSystemObject(const FileSystemObjectType fsObjectType, const std::wstring& fileSystemObjectPath, const std::wstring& fileSystemObjectName, const DWORD& fileSystemObjectSize);
+	FileSystemObject(const FileSystemObjectType fsObjectType, const std::wstring& fileSystemObjectPath, const std::wstring& fileSystemObjectName, const LONGLONG& fileSystemObjectSize);
 	FileSystemObjectType getFileSystemObjectType() const;
-	DWORD getFileSystemObjectSize() const;
+	LONGLONG getFileSystemObjectSize() const;
 	const std::wstring& getFileSystemObjectPath() const;
 	const std::wstring& getFileSystemObjectName() const;
 private:
 	FileSystemObjectType fsObjectType;
 	std::wstring fileSystemObjectPath;
 	std::wstring fileSystemObjectName;
-	DWORD fileSystemObjectSize;
+	LONGLONG fileSystemObjectSize;
 };
 
