@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BreadthTraversingStrategy.h"
-#include "HandleWrapper.h"
+#include "FindFileWrapper.h"
+#include "FileWrapper.h"
 
 BreadthTraversingStrategy::BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: searchGoalStrategy(searchGoalStrategy),
@@ -24,52 +25,45 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 	do
 	{
 		LONGLONG directorySize = 0;
-		WIN32_FIND_DATA FindFileData;
-		HANDLE hFind;
-		hFind = FindFirstFileEx(nextSearchPathWithWildCard.c_str(), FindExInfoStandard, &FindFileData,
-			FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
-		HandleWrapper handleWrapper(hFind, HandleType::SEARCH_HANDLE);
-		if (handleWrapper.GetHandle() != INVALID_HANDLE_VALUE)
+
+		auto findFileWrapper = FindFileWrapper(nextSearchPathWithWildCard, FindExInfoStandard, FindExSearchNameMatch, FIND_FIRST_EX_LARGE_FETCH);
+
+		if (findFileWrapper.findFirstFile())
 		{
 			do
 			{
+				auto FindFileData = findFileWrapper.getFoundFileData();
 				if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 				{
 					auto filePath = nextSearchPath + FindFileData.cFileName;
-					HANDLE hFile = CreateFileW(filePath.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-					HandleWrapper handleWrapper(hFile, HandleType::FILE_HANDLE);
-					if (handleWrapper.GetHandle() == INVALID_HANDLE_VALUE)
+					auto fileWrapper = FileWrapper(filePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+					if (!fileWrapper.openFile())
 					{
 						logStream.str(L"");
-						logStream << "CreateFileW failed " << GetLastError() << std::endl;
+						logStream << "File opening failed; file: " << filePath << "; error code: " << GetLastError() << std::endl;
 						scanningProgressObserver->onScanningErrorOccurred(logStream.str());
 					}
 					else
 					{
-						LARGE_INTEGER fileSize;
-						if (GetFileSizeEx(handleWrapper.GetHandle(), &fileSize))
+						logStream.str(L"");
+						logStream << L"Found file: " << FindFileData.cFileName << std::endl;
+						scanningProgressObserver->onScanningProgress(logStream.str());
+
+						auto fileSize = fileWrapper.getFileSize();
+						if (fileSize != -1)
 						{
 							auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextSearchPath, 
-								FindFileData.cFileName, fileSize.QuadPart));
-							directorySize += fileSize.QuadPart;
+								FindFileData.cFileName, fileSize));
+							directorySize += fileSize;
 							fileSystemObjects.emplace_back(fileSystemObject);
 						}
 						else
 						{
 							logStream.str(L"");
-							logStream << "GetFileSizeEx failed " << GetLastError() << std::endl;
+							logStream << "Getting file size failed! File: " << filePath << ". Error code: " << GetLastError() << std::endl;
 							scanningProgressObserver->onScanningErrorOccurred(logStream.str());
 						}						
 					}
-					/*auto fileSize = (FindFileData.nFileSizeHigh * (MAXDWORD + 1)) + FindFileData.nFileSizeLow;
-					directorySize += fileSize;
-					{
-						logStream.str(L"");
-						logStream << L"Found file: " << FindFileData.cFileName << std::endl;
-						scanningProgressObserver->onScanningProgress(logStream.str());
-					}*/
-					/*auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, nextSearchPath, FindFileData.cFileName, fileSize));
-					fileSystemObjects.emplace_back(fileSystemObject);*/
 				}
 				else
 				{
@@ -81,13 +75,13 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 						subDirsList.emplace_back(nextSearchPath + FindFileData.cFileName + L"\\");
 					}
 				}
-			} while (FindNextFile(handleWrapper.GetHandle(), &FindFileData));
+			} while (findFileWrapper.findNextFile());
 		}
 		else
 		{
 			logStream.str(L"");
-			logStream << "FindFirstFileEx failed " << GetLastError() << std::endl;
-			scanningProgressObserver->onScanningErrorOccurred(logStream.str());
+			logStream << "Find first file failed! Path: " << traverseDir << "Error code: " << GetLastError() << std::endl;
+			scanningProgressObserver->onScanningProgress(logStream.str());
 			return;
 		}
 
@@ -111,10 +105,9 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		{
 			continueSearch = false;
 		}
-		/*FindClose(hFind);*/
 	} while (continueSearch);
 
-	logStream = std::wstringstream();
+	logStream.str(L"");
 	logStream << L"Breadth traversing ended! Starting perform search goal action!" << std::endl;
 	scanningProgressObserver->onScanningProgress(logStream.str());
 

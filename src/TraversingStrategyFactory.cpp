@@ -5,11 +5,10 @@
 #include "BreadthTraversingStrategy.h"
 #include "DepthTraversingStrategy.h"
 
-TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
+TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments)
 {
 	TraversingStrategySharedPtr traversingStrategy;
-	auto scannerArgumentsProvider = ScannerArgumentsProvider::Instance();
-	switch (scannerArgumentsProvider.getTraverseMode())
+	switch (parsedArguments.traverseMode)
 	{
 		case TraverseMode::BREADTH:
 		{

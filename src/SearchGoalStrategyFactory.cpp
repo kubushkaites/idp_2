@@ -6,15 +6,14 @@
 #include "DeleteFilesByNameStrategy.h"
 #include "FindFilesByExtensionStrategy.h"
 
-SearchGoalStrategySharedPtr SearchGoalStrategyFactory::createSearchGoalStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
+SearchGoalStrategySharedPtr SearchGoalStrategyFactory::createSearchGoalStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments)
 {
 	SearchGoalStrategySharedPtr searchGoalStrategy;
-	auto scannerArgumentsProvider = ScannerArgumentsProvider::Instance();
-	switch (scannerArgumentsProvider.getSearchGoal())
+	switch (parsedArguments.searchGoal)
 	{
 		case SearchGoal::FIND_LARGEST_FOLDERS:
 		{
-			searchGoalStrategy = SearchGoalStrategySharedPtr(new FindLargestFoldersStrategy(scannerArgumentsProvider.getAmountOfObjectsToFind(), scanningProgressObserver));
+			searchGoalStrategy = SearchGoalStrategySharedPtr(new FindLargestFoldersStrategy(parsedArguments.amountOfFoldersToFind, scanningProgressObserver));
 			break;
 		}
 		case SearchGoal::FIND_LARGEST_FILE:
@@ -24,12 +23,12 @@ SearchGoalStrategySharedPtr SearchGoalStrategyFactory::createSearchGoalStrategy(
 		}
 		case SearchGoal::FIND_FILES_BY_EXTENSION:
 		{
-			searchGoalStrategy = SearchGoalStrategySharedPtr(new FindFilesByExtensionStrategy(scannerArgumentsProvider.getSearchFileExtension(), scanningProgressObserver));
+			searchGoalStrategy = SearchGoalStrategySharedPtr(new FindFilesByExtensionStrategy(parsedArguments.searchFileExtension, scanningProgressObserver));
 			break;
 		}
 		case SearchGoal::DELETE_FILE:
 		{
-			searchGoalStrategy = SearchGoalStrategySharedPtr(new DeleteFilesByNameStrategy(scannerArgumentsProvider.getFileToRemoveName(), scanningProgressObserver));
+			searchGoalStrategy = SearchGoalStrategySharedPtr(new DeleteFilesByNameStrategy(parsedArguments.fileToRemoveName, scanningProgressObserver));
 			break;
 		}
 		default:

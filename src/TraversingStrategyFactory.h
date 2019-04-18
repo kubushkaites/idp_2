@@ -8,5 +8,5 @@
 class TraversingStrategyFactory
 {
 public:
-	static TraversingStrategySharedPtr createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver);
+	static TraversingStrategySharedPtr createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments);
 };

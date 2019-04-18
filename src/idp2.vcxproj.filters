@@ -43,6 +43,12 @@
     <Filter Include="Source Files\SearchGoalStrategy">
       <UniqueIdentifier>{5da25e92-5c30-4c15-a974-d3d764a283b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Wrappers">
+      <UniqueIdentifier>{ba8410ac-362e-404f-8c1a-cedc127ae682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Wrappers">
+      <UniqueIdentifier>{a2116dae-0bbe-4153-9278-5d0f4adaee79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -93,8 +99,11 @@
     <ClInclude Include="FindFilesByExtensionStrategy.h">
       <Filter>Header Files\SearchGoalStrategy</Filter>
     </ClInclude>
-    <ClInclude Include="HandleWrapper.h">
-      <Filter>Header Files\FileSystemScanner</Filter>
+    <ClInclude Include="FindFileWrapper.h">
+      <Filter>Header Files\Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWrapper.h">
+      <Filter>Header Files\Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +149,11 @@
     <ClCompile Include="FindFilesByExtensionStrategy.cpp">
       <Filter>Source Files\SearchGoalStrategy</Filter>
     </ClCompile>
-    <ClCompile Include="HandleWrapper.cpp">
-      <Filter>Source Files\FileSystemScanner</Filter>
+    <ClCompile Include="FindFileWrapper.cpp">
+      <Filter>Source Files\Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWrapper.cpp">
+      <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

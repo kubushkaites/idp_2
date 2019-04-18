@@ -21,7 +21,7 @@ void ConsoleScanningProgressObserver::onLargestFileFound(std::any largestFile)
 
 void ConsoleScanningProgressObserver::onFilesByExtensionFound(std::any filesByExtension)
 {
-	std::wcout << L"Files with extension \"" << ScannerArgumentsProvider::Instance().getSearchFileExtension() <<L"\" found: " << std::endl;
+	std::wcout << L"Search files by extension ended: " << std::endl;
 	auto files = std::any_cast<std::list<FileSystemObjectSharedPtr>*>(filesByExtension);
 	for (auto& file : *files)
 	{
@@ -64,8 +64,7 @@ void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, st
 {
 	if (searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
 	{
-		onLargestFoldersFound(objectsMatchingChosenSearchGoal);
-		
+		onLargestFoldersFound(objectsMatchingChosenSearchGoal);		
 	}
 	else if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
 	{

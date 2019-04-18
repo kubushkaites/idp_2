@@ -160,10 +160,11 @@
     <ClInclude Include="DepthTraversingStrategy.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
+    <ClInclude Include="FileWrapper.h" />
     <ClInclude Include="FindFilesByExtensionStrategy.h" />
+    <ClInclude Include="FindFileWrapper.h" />
     <ClInclude Include="FindLargestFileStrategy.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
-    <ClInclude Include="HandleWrapper.h" />
     <ClInclude Include="IScanningProgressObserver.h" />
     <ClInclude Include="ISearchGoalStrategy.h" />
     <ClInclude Include="ITraversingStrategy.h" />
@@ -179,10 +180,11 @@
     <ClCompile Include="DepthTraversingStrategy.cpp" />
     <ClCompile Include="FileSystemObject.cpp" />
     <ClCompile Include="FileSystemScanner.cpp" />
+    <ClCompile Include="FileWrapper.cpp" />
     <ClCompile Include="FindFilesByExtensionStrategy.cpp" />
+    <ClCompile Include="FindFileWrapper.cpp" />
     <ClCompile Include="FindLargestFileStrategy.cpp" />
     <ClCompile Include="FindLargestFoldersStrategy.cpp" />
-    <ClCompile Include="HandleWrapper.cpp" />
     <ClCompile Include="idp2.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

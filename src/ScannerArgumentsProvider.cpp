@@ -1,64 +1,33 @@
 #include "pch.h"
 #include "ScannerArgumentsProvider.h"
 
-ScannerArgumentsProvider& ScannerArgumentsProvider::Instance()
+void ScannerArgumentsProvider::parseArguments(std::map<std::wstring, std::variant<std::wstring, TraverseMode, SearchGoal>>&& arguments)
 {
-	static ScannerArgumentsProvider instance;
-	return instance;
-}
-
-void ScannerArgumentsProvider::parseArguments(std::map<std::wstring, std::wstring>&& arguments)
-{
-	traverseMode = traverseModesMatches.at(arguments.at(ScannerArgumentsProviderConstants::traverseMode));
-	searchGoal = searchGoalMatches.at(arguments.at(ScannerArgumentsProviderConstants::searchGoal));
-	traversingStartPath = arguments.at(ScannerArgumentsProviderConstants::traversingStartPath);
+	parsedArguments.traverseMode = std::get<TraverseMode>(arguments.at(ScannerArgumentsProviderConstants::traverseMode));
+	parsedArguments.searchGoal = std::get<SearchGoal>(arguments.at(ScannerArgumentsProviderConstants::searchGoal));
+	parsedArguments.traversingStartPath = std::get<std::wstring>(arguments.at(ScannerArgumentsProviderConstants::traversingStartPath));
 	
 	const wchar_t trailingSlash = L'\\';
-	if (traversingStartPath[traversingStartPath.size() - 1] != trailingSlash)
+	if (parsedArguments.traversingStartPath[parsedArguments.traversingStartPath.size() - 1] != trailingSlash)
 	{
-		traversingStartPath += trailingSlash;
+		parsedArguments.traversingStartPath += trailingSlash;
 	}
 
-	if (searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
+	if (parsedArguments.searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
 	{
-		amountOfFoldersToFind = std::stoi(arguments.at(ScannerArgumentsProviderConstants::amountOfFoldersToFind));
+		parsedArguments.amountOfFoldersToFind = std::stoi(std::get<std::wstring>(arguments.at(ScannerArgumentsProviderConstants::amountOfFoldersToFind)));
 	}
-	else if (searchGoal == SearchGoal::FIND_FILES_BY_EXTENSION)
+	else if (parsedArguments.searchGoal == SearchGoal::FIND_FILES_BY_EXTENSION)
 	{
-		searchFileExtension = arguments.at(ScannerArgumentsProviderConstants::searchFileExtension);
+		parsedArguments.searchFileExtension = std::get<std::wstring>(arguments.at(ScannerArgumentsProviderConstants::searchFileExtension));
 	}
-	else if (searchGoal == SearchGoal::DELETE_FILE)
+	else if (parsedArguments.searchGoal == SearchGoal::DELETE_FILE)
 	{
-		fileToRemoveName = arguments.at(ScannerArgumentsProviderConstants::fileToRemoveName);
+		parsedArguments.fileToRemoveName = std::get<std::wstring>(arguments.at(ScannerArgumentsProviderConstants::fileToRemoveName));
 	}
 }
 
-TraverseMode ScannerArgumentsProvider::getTraverseMode() const
+const ParsedArguments & ScannerArgumentsProvider::getParsedArguments() const
 {
-	return traverseMode;
-}
-
-SearchGoal ScannerArgumentsProvider::getSearchGoal() const
-{
-	return searchGoal;
-}
-
-std::wstring ScannerArgumentsProvider::getStartSearchPath()const
-{
-	return traversingStartPath;
-}
-
-std::wstring ScannerArgumentsProvider::getFileToRemoveName()const
-{
-	return fileToRemoveName;
-}
-
-std::wstring ScannerArgumentsProvider::getSearchFileExtension()const
-{
-	return searchFileExtension;
-}
-
-int ScannerArgumentsProvider::getAmountOfObjectsToFind()const
-{
-	return amountOfFoldersToFind;
+	return parsedArguments;
 }

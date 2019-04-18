@@ -7,5 +7,5 @@
 class SearchGoalStrategyFactory
 {
 public:
-	static SearchGoalStrategySharedPtr createSearchGoalStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver);
+	static SearchGoalStrategySharedPtr createSearchGoalStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments);
 };

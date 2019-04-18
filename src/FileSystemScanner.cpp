@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "FileSystemScanner.h"
 
-FileSystemScanner::FileSystemScanner(ScanningProgressObserverSharedPtr scanningProgressObserver)
+FileSystemScanner::FileSystemScanner(ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments)
+	: parsedArguments(parsedArguments)
 {
-	searchGoalStrategy = SearchGoalStrategyFactory::createSearchGoalStrategy(scanningProgressObserver);
-	traversingStrategy = TraversingStrategyFactory::createTraversingStrategy(searchGoalStrategy, scanningProgressObserver);
+	searchGoalStrategy = SearchGoalStrategyFactory::createSearchGoalStrategy(scanningProgressObserver, parsedArguments);
+	traversingStrategy = TraversingStrategyFactory::createTraversingStrategy(searchGoalStrategy, scanningProgressObserver, parsedArguments);
 }
 
 void FileSystemScanner::Scan()
 {
-	traversingStrategy->traverse(ScannerArgumentsProvider::Instance().getStartSearchPath());
+	traversingStrategy->traverse(parsedArguments.traversingStartPath);
 }

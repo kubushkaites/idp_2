@@ -7,9 +7,10 @@
 class FileSystemScanner
 {
 public:
-	FileSystemScanner(ScanningProgressObserverSharedPtr scanningProgressObserver);
+	FileSystemScanner(ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedAruments);
 	void Scan();
 private:
+	ParsedArguments parsedArguments;
 	TraversingStrategySharedPtr traversingStrategy;
 	SearchGoalStrategySharedPtr searchGoalStrategy;
 };
