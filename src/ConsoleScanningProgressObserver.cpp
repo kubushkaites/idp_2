@@ -2,43 +2,6 @@
 #include "ConsoleScanningProgressObserver.h"
 
 
-void ConsoleScanningProgressObserver::onLargestFoldersFound(std::any largestFolders)
-{
-	std::cout << "Largest folders found: " << std::endl;
-	auto folders = std::any_cast<std::vector<FileSystemObjectSharedPtr>*>(largestFolders);
-	for (auto& folder : *folders)
-	{
-		printFileSystemObjectInfo(folder);
-	}
-}
-
-void ConsoleScanningProgressObserver::onLargestFileFound(std::any largestFile)
-{
-	std::cout << "Largest file found: " << std::endl;
-	auto file = std::any_cast<FileSystemObjectSharedPtr>(largestFile);
-	printFileSystemObjectInfo(file);
-}
-
-void ConsoleScanningProgressObserver::onFilesByExtensionFound(std::any filesByExtension)
-{
-	std::wcout << L"Search files by extension ended: " << std::endl;
-	auto files = std::any_cast<std::list<FileSystemObjectSharedPtr>*>(filesByExtension);
-	for (auto& file : *files)
-	{
-		printFileSystemObjectInfo(file);
-	}
-}
-
-void ConsoleScanningProgressObserver::onDeletedFilesByName(std::any deletedFilesByName)
-{
-	std::wcout << L"The following files were deleted: " << std::endl;
-	auto files = std::any_cast<std::list<FileSystemObjectSharedPtr>*>(deletedFilesByName);
-	for (auto& file : *files)
-	{
-		printFileSystemObjectInfo(file);
-	}
-}
-
 void ConsoleScanningProgressObserver::printFileSystemObjectInfo(FileSystemObjectSharedPtr fsObject)
 {
 	std::cout << "-----------------------------" << std::endl;
@@ -58,24 +21,33 @@ void ConsoleScanningProgressObserver::onScanningErrorOccurred(const std::wstring
 	std::wcout<<L"Scanning error occurred: "<<std::endl<<L"\""<<errorMessage<<L"\""<<std::endl;
 }
 
-
-
-void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, std::any objectsMatchingChosenSearchGoal)
+void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, const std::list<FileSystemObjectSharedPtr>& objectsMatchingChosenSearchGoal)
 {
 	if (searchGoal == SearchGoal::FIND_LARGEST_FOLDERS)
 	{
-		onLargestFoldersFound(objectsMatchingChosenSearchGoal);		
-	}
-	else if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
-	{
-		onLargestFileFound(objectsMatchingChosenSearchGoal);
+		std::cout << "Largest folders found: " << std::endl;
 	}
 	else if (searchGoal == SearchGoal::FIND_FILES_BY_EXTENSION)
 	{
-		onFilesByExtensionFound(objectsMatchingChosenSearchGoal);
+		std::cout << "Search files by extension ended: " << std::endl;
 	}
 	else if (searchGoal == SearchGoal::DELETE_FILE)
 	{
-		onDeletedFilesByName(objectsMatchingChosenSearchGoal);
+		std::cout << "The following files were deleted: " << std::endl;
+	}
+	for (auto& objectMatchingChosenSearchGoal : objectsMatchingChosenSearchGoal)
+	{
+		printFileSystemObjectInfo(objectMatchingChosenSearchGoal);
 	}
 }
+
+void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, const FileSystemObjectSharedPtr objectMatchingToChosenSearchGoal)
+{
+	if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
+	{
+		std::cout << "Largest file found: " << std::endl;
+	}
+	printFileSystemObjectInfo(objectMatchingToChosenSearchGoal);
+}
+
+

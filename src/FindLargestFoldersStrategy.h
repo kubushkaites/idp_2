@@ -10,6 +10,6 @@ public:
 private:
 	int amountOfFoldersToFind = 0;
 	bool foundDirectoriesSorted = false;
-	std::vector<FileSystemObjectSharedPtr> foundDirectories;
+	std::list<FileSystemObjectSharedPtr> foundDirectories;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };
