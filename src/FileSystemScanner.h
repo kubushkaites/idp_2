@@ -11,6 +11,7 @@ public:
 	void Scan();
 private:
 	ParsedArguments parsedArguments;
+	ScanningProgressObserverSharedPtr scanningProgressObserver;
 	TraversingStrategySharedPtr traversingStrategy;
 	SearchGoalStrategySharedPtr searchGoalStrategy;
 };

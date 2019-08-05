@@ -6,11 +6,10 @@
 class DepthTraversingStrategy : public ITraversingStrategy
 {
 public:
-	DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver);
-	virtual void traverse(const std::wstring& traverseDir) override;
+	DepthTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver);
+	virtual const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> traverse(const std::wstring& traverseDir) override;
 private:
 	std::wstring initialTraversingDir;
 	std::list<FileSystemObjectSharedPtr> fileSystemObjects;
-	SearchGoalStrategySharedPtr searchGoalStrategy;
 	ScanningProgressObserverSharedPtr scanningProgressObserver;
 };

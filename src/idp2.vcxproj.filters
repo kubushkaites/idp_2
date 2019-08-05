@@ -49,9 +49,6 @@
     <Filter Include="Source Files\Wrappers">
       <UniqueIdentifier>{a2116dae-0bbe-4153-9278-5d0f4adaee79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Exceptions">
-      <UniqueIdentifier>{ea745373-004b-4f73-a9f8-2ec685c0a9c2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

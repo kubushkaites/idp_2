@@ -12,7 +12,7 @@ int main()
 	try 
 	{
 		std::map<std::wstring, TraverseMode> traverseModeMatches = { {L"1", TraverseMode::BREADTH},
-																	{L"2", TraverseMode::BREADTH} };
+																	{L"2", TraverseMode::DEPTH} };
 		std::map<std::wstring, SearchGoal> searchGoalMatches = { {L"1", SearchGoal::FIND_LARGEST_FOLDERS},
 																   {L"2", SearchGoal::FIND_LARGEST_FILE},
 																   {L"3", SearchGoal::FIND_FILES_BY_EXTENSION},

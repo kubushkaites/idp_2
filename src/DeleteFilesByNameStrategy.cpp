@@ -8,9 +8,8 @@ DeleteFilesByNameStrategy::DeleteFilesByNameStrategy(std::wstring fileNameToDele
 {
 }
 
-void DeleteFilesByNameStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
+const std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&> DeleteFilesByNameStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
 {
-	std::list<FileSystemObjectSharedPtr> deletedFiles;
 	for (auto& fsObject : fileSystemObjects)
 	{
 		if (fsObject->getFileSystemObjectType() == FileSystemObjectType::File && fsObject->getFileSystemObjectName() == fileNameToDelete)
@@ -18,7 +17,7 @@ void DeleteFilesByNameStrategy::performSearchGoalAction(const std::list<FileSyst
 			auto fileNameWithPath = fsObject->getFileSystemObjectPath() + fsObject->getFileSystemObjectName();
 			if (DeleteFile(fileNameWithPath.c_str()))
 			{
-				deletedFiles.push_back(fsObject);
+				searchGoalFsObjects.push_back(fsObject);
 			}
 			else
 			{
@@ -27,5 +26,5 @@ void DeleteFilesByNameStrategy::performSearchGoalAction(const std::list<FileSyst
 			}
 		}
 	}
-	scanningProgressObserver->onScanningResult(SearchGoal::DELETE_FILE, deletedFiles);
+	return std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&>(SearchGoal::DELETE_FILE, searchGoalFsObjects);
 }

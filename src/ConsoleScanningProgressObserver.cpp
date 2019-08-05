@@ -35,19 +35,14 @@ void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, co
 	{
 		std::cout << "The following files were deleted: " << std::endl;
 	}
+	else if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
+	{
+		std::cout << "Largest file found: " << std::endl;
+	}
 	for (auto& objectMatchingChosenSearchGoal : objectsMatchingChosenSearchGoal)
 	{
 		printFileSystemObjectInfo(objectMatchingChosenSearchGoal);
 	}
-}
-
-void ConsoleScanningProgressObserver::onScanningResult(SearchGoal searchGoal, const FileSystemObjectSharedPtr objectMatchingToChosenSearchGoal)
-{
-	if (searchGoal == SearchGoal::FIND_LARGEST_FILE)
-	{
-		std::cout << "Largest file found: " << std::endl;
-	}
-	printFileSystemObjectInfo(objectMatchingToChosenSearchGoal);
 }
 
 

@@ -5,19 +5,19 @@
 #include "BreadthTraversingStrategy.h"
 #include "DepthTraversingStrategy.h"
 
-TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments)
+TraversingStrategySharedPtr TraversingStrategyFactory::createTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver, const ParsedArguments& parsedArguments)
 {
 	TraversingStrategySharedPtr traversingStrategy;
 	switch (parsedArguments.traverseMode)
 	{
 		case TraverseMode::BREADTH:
 		{
-			traversingStrategy = TraversingStrategySharedPtr(new BreadthTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
+			traversingStrategy = TraversingStrategySharedPtr(new BreadthTraversingStrategy(scanningProgressObserver));
 			break;
 		}
 		case TraverseMode::DEPTH:
 		{
-			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(searchGoalStrategy, scanningProgressObserver));
+			traversingStrategy = TraversingStrategySharedPtr(new DepthTraversingStrategy(scanningProgressObserver));
 			break;
 		}
 		default:

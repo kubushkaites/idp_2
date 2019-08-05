@@ -6,7 +6,7 @@ FindLargestFileStrategy::FindLargestFileStrategy(ScanningProgressObserverSharedP
 {
 }
 
-void FindLargestFileStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
+const std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&> FindLargestFileStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
 {
 	FileSystemObjectSharedPtr largestFile = nullptr;
 	for (auto& fsObject : fileSystemObjects)
@@ -23,5 +23,6 @@ void FindLargestFileStrategy::performSearchGoalAction(const std::list<FileSystem
 			}
 		}
 	}
-	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FILE, largestFile);
+	searchGoalFsObjects.push_back(largestFile);
+	return std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&>(SearchGoal::FIND_LARGEST_FILE, searchGoalFsObjects);
 }

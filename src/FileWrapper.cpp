@@ -3,7 +3,7 @@
 #include "IScanningProgressObserver.h"
 #include "Utils.h"
 
-FileWrapper::FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD shareMode, 
+FileWrapper::FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD shareMode,
 	LPSECURITY_ATTRIBUTES securityAttributes, DWORD creationDisposition, DWORD flagsAndAttributes, HANDLE templateFile)
 	: fileName(fileName),
 	desiredAccess(desiredAccess),
@@ -14,7 +14,7 @@ FileWrapper::FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD share
 	templateFile(templateFile)
 {
 	hFile = CreateFileW(fileName.c_str(), desiredAccess, shareMode, securityAttributes, creationDisposition, flagsAndAttributes, templateFile);
-	if (hFile == INVALID_HANDLE_VALUE) 
+	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		std::string errorMessage = "INVALID_HANDLE_VALUE on CreateFileW! File path: " + Utf8Converter::utf8Encode(fileName);
 		throw std::runtime_error(errorMessage);
@@ -28,7 +28,7 @@ const LONGLONG & FileWrapper::getFileSize()
 	{
 		fileSize = size.QuadPart;
 	}
-	else 
+	else
 	{
 		std::stringstream error;
 		error << "Getting file size failed! File: " << Utf8Converter::utf8Encode(fileName) << ". Error code: " << GetLastError() << std::endl;

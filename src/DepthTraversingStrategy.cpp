@@ -3,14 +3,13 @@
 #include "FindFileWrapper.h"
 #include "FileWrapper.h"
 
-DepthTraversingStrategy::DepthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
-	: searchGoalStrategy(searchGoalStrategy),
-	scanningProgressObserver(scanningProgressObserver)
+DepthTraversingStrategy::DepthTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
+	: scanningProgressObserver(scanningProgressObserver)
 {
 
 }
 
-void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
+const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
 	if (initialTraversingDir.empty())
 	{
@@ -33,8 +32,8 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 	logStream << L"The first file found is: " << findFileWrapper.getFoundFileData().cFileName << std::endl;
 	scanningProgressObserver->onScanningProgress(logStream.str());
 
-	do {
-
+	do 
+	{
 		auto FindFileData = findFileWrapper.getFoundFileData();
 
 		if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
@@ -50,6 +49,7 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 			auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, traverseDir,
 				FindFileData.cFileName, fileSize));
 			directorySize += fileSize;
+
 			fileSystemObjects.emplace_back(fileSystemObject);
 		}
 		else
@@ -81,6 +81,6 @@ void DepthTraversingStrategy::traverse(const std::wstring & traverseDir)
 		logStream << L"Depth traversing ended! Starting perform search goal action!" << std::endl;
 		scanningProgressObserver->onScanningProgress(logStream.str());
 
-		searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
+		return std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&>(true, fileSystemObjects);
 	}
 }

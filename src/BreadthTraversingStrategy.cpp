@@ -2,16 +2,14 @@
 #include "BreadthTraversingStrategy.h"
 #include "FindFileWrapper.h"
 #include "FileWrapper.h"
-#include "Utils.h"
 
-BreadthTraversingStrategy::BreadthTraversingStrategy(SearchGoalStrategySharedPtr searchGoalStrategy, ScanningProgressObserverSharedPtr scanningProgressObserver)
-	: searchGoalStrategy(searchGoalStrategy),
-	scanningProgressObserver(scanningProgressObserver)
+BreadthTraversingStrategy::BreadthTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
+	: scanningProgressObserver(scanningProgressObserver)
 {
 
 }
 
-void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
+const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 {
 	std::wstringstream logStream;
 	logStream << L"Current traverse path: " + traverseDir;
@@ -86,5 +84,5 @@ void BreadthTraversingStrategy::traverse(const std::wstring & traverseDir)
 	logStream << L"Breadth traversing ended! Starting perform search goal action!" << std::endl;
 	scanningProgressObserver->onScanningProgress(logStream.str());
 
-	searchGoalStrategy->performSearchGoalAction(fileSystemObjects);
+	return std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&>(true, fileSystemObjects);
 }

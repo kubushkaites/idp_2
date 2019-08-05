@@ -4,7 +4,7 @@
 class FileWrapper
 {
 public:
-	FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD shareMode, LPSECURITY_ATTRIBUTES securityAttibutes, 
+	FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD shareMode, LPSECURITY_ATTRIBUTES securityAttibutes,
 		DWORD creationDisposition, DWORD flagsAndAttibutes, HANDLE templateFile);
 	const LONGLONG& getFileSize();
 	~FileWrapper();

@@ -4,18 +4,18 @@
 
 FindLargestFoldersStrategy::FindLargestFoldersStrategy(const int amountOfFoldersToFind, ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: amountOfFoldersToFind(amountOfFoldersToFind),
-	foundDirectories(amountOfFoldersToFind),
+	searchGoalFsObjects(amountOfFoldersToFind),
 	scanningProgressObserver(scanningProgressObserver)
 {
 }
 
-void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
+const std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&> FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSystemObjectSharedPtr>& fileSystemObjects)
 {
 	for (auto& fileSystemObject : fileSystemObjects)
 	{
 		if (fileSystemObject->getFileSystemObjectType() == FileSystemObjectType::Directory)
 		{
-			auto it = std::find_if(foundDirectories.begin(), foundDirectories.end(), [fileSystemObject](FileSystemObjectSharedPtr& fsObject)
+			auto it = std::find_if(searchGoalFsObjects.begin(), searchGoalFsObjects.end(), [fileSystemObject](FileSystemObjectSharedPtr& fsObject)
 			{
 				auto ret = false;
 				if (fsObject != nullptr)
@@ -29,12 +29,12 @@ void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSys
 				return ret;
 			});
 
-			if (it != foundDirectories.end())
+			if (it != searchGoalFsObjects.end())
 			{				
 				if (*it != nullptr) 
 				{
-					foundDirectories.insert(it, fileSystemObject);
-					foundDirectories.pop_back();
+					searchGoalFsObjects.insert(it, fileSystemObject);
+					searchGoalFsObjects.pop_back();
 				}
 				else 
 				{
@@ -43,5 +43,5 @@ void FindLargestFoldersStrategy::performSearchGoalAction(const std::list<FileSys
 			}
 		}
 	}
-	scanningProgressObserver->onScanningResult(SearchGoal::FIND_LARGEST_FOLDERS, foundDirectories);
+	return std::tuple<SearchGoal, const std::list<FileSystemObjectSharedPtr>&>(SearchGoal::FIND_LARGEST_FOLDERS, searchGoalFsObjects);
 }
