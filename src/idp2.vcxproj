@@ -172,6 +172,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="SearchGoalStrategyFactory.h" />
     <ClInclude Include="TraversingStrategyFactory.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BreadthTraversingStrategy.cpp" />

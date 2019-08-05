@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FileWrapper.h"
 #include "IScanningProgressObserver.h"
+#include "Utils.h"
 
 FileWrapper::FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD shareMode, 
 	LPSECURITY_ATTRIBUTES securityAttributes, DWORD creationDisposition, DWORD flagsAndAttributes, HANDLE templateFile)
@@ -12,28 +13,26 @@ FileWrapper::FileWrapper(std::wstring fileName, DWORD desiredAccess, DWORD share
 	flagsAndAttributes(flagsAndAttributes),
 	templateFile(templateFile)
 {
-}
-
-bool FileWrapper::openFile()
-{
-	auto isSucceeded = false;
 	hFile = CreateFileW(fileName.c_str(), desiredAccess, shareMode, securityAttributes, creationDisposition, flagsAndAttributes, templateFile);
-	if (hFile != INVALID_HANDLE_VALUE)
+	if (hFile == INVALID_HANDLE_VALUE) 
 	{
-		isSucceeded = true;
+		std::string errorMessage = "INVALID_HANDLE_VALUE on CreateFileW! File path: " + Utf8Converter::utf8Encode(fileName);
+		throw std::runtime_error(errorMessage);
 	}
-	return isSucceeded;
 }
 
 const LONGLONG & FileWrapper::getFileSize()
 {
-	if (hFile != nullptr && hFile != INVALID_HANDLE_VALUE)
+	LARGE_INTEGER size;
+	if (GetFileSizeEx(hFile, &size))
 	{
-		LARGE_INTEGER size;
-		if (GetFileSizeEx(hFile, &size))
-		{
-			fileSize = size.QuadPart;
-		}
+		fileSize = size.QuadPart;
+	}
+	else 
+	{
+		std::stringstream error;
+		error << "Getting file size failed! File: " << Utf8Converter::utf8Encode(fileName) << ". Error code: " << GetLastError() << std::endl;
+		throw std::runtime_error(error.str());
 	}
 	return fileSize;
 }

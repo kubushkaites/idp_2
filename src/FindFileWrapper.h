@@ -6,7 +6,6 @@ class FindFileWrapper
 public:
 	FindFileWrapper(const std::wstring& fileName, const FINDEX_INFO_LEVELS findInfoLevels, const FINDEX_SEARCH_OPS searchOptions,
 		const DWORD additionalFlags);
-	bool findFirstFile();
 	bool findNextFile();
 	const WIN32_FIND_DATA& getFoundFileData() const;
 	~FindFileWrapper();

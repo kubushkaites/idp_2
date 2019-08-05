@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "FindFileWrapper.h"
+#include "Utils.h"
 
 FindFileWrapper::FindFileWrapper(const std::wstring & fileName, const FINDEX_INFO_LEVELS findInfoLevels, 
 	const FINDEX_SEARCH_OPS searchOptions, const DWORD additionalFlags)
@@ -8,19 +9,16 @@ FindFileWrapper::FindFileWrapper(const std::wstring & fileName, const FINDEX_INF
 	searchOptions(searchOptions),
 	additionalFlags(additionalFlags)
 {
-}
-
-bool FindFileWrapper::findFirstFile()
-{
-	auto isSucceeded = false;
 	hFind = FindFirstFileEx(fileName.c_str(), findInfoLevels, &findFileData,
 		searchOptions, NULL, additionalFlags);
-	if (hFind != INVALID_HANDLE_VALUE)
+
+	if (hFind == INVALID_HANDLE_VALUE) 
 	{
-		isSucceeded = true;
+		std::string errorMessage = "INVALID_HANDLE_VALUE on FindFirstFileEx! File path: " + Utf8Converter::utf8Encode(fileName);
+		throw std::runtime_error(errorMessage);
 	}
-	return isSucceeded;
 }
+
 
 bool FindFileWrapper::findNextFile()
 {
