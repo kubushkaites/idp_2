@@ -2,24 +2,38 @@
 #include "HandleWrapper.h"
 
 HandleWrapper::HandleWrapper(HANDLE handle, HandleType handleType)
-	: handle(handle),
-	handleType(handleType)
-{
+{ 
+	if (handle == INVALID_HANDLE_VALUE)
+	{
+		std::string errorMessage = "Error code : " + std::to_string(GetLastError());
+		throw std::runtime_error(errorMessage);
+	}
+	else 
+	{
+		this->handle = handle;
+		this->handleType = handleType;
+	}
 }
 
-HANDLE HandleWrapper::GetHandle() const
+HANDLE HandleWrapper::getHandle() const
 {
 	return handle;
 }
 
 HandleWrapper::~HandleWrapper()
 {
-	if (handleType == HandleType::SEARCH_HANDLE)
+	if (handleType == HandleType::FILE_HANDLE) 
 	{
-		FindClose(handle);
+		if (!CloseHandle(handle)) 
+		{
+			std::cerr << "CloseHandle failed! Error code: " << GetLastError() << std::endl;
+		}
 	}
-	else if (handleType == HandleType::FILE_HANDLE)
+	else if(handleType == HandleType::FIND_FILE_HANDLE)
 	{
-		CloseHandle(handle);
+		if (!FindClose(handle))
+		{
+			std::cerr << "FindClose failed! Error code: " << GetLastError() << std::endl;
+		}
 	}
 }

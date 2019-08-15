@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DepthTraversingStrategy.h"
-#include "FindFileWrapper.h"
-#include "FileWrapper.h"
+#include "Utils.h"
+#include "HandleWrapper.h"
 
 DepthTraversingStrategy::DepthTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: scanningProgressObserver(scanningProgressObserver)
@@ -22,51 +22,54 @@ const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> DepthTravers
 
 	auto currentTraverseDir = traverseDir + L"*";
 
-	auto findFileWrapper = FindFileWrapper(currentTraverseDir, FindExInfoStandard, FindExSearchNameMatch, FIND_FIRST_EX_LARGE_FETCH);
+	WIN32_FIND_DATA findFileData;
+
+	auto findFileHandleWrapper = HandleWrapper(FindFirstFileEx(currentTraverseDir.c_str(), FindExInfoStandard, &findFileData,
+		FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH), HandleType::FIND_FILE_HANDLE);
 
 	LONGLONG directorySize = 0;
 
 	std::list<std::wstring> subDirsList;
 
 	logStream.str(L"");
-	logStream << L"The first file found is: " << findFileWrapper.getFoundFileData().cFileName << std::endl;
+	logStream << L"The first file found is: " << findFileData.cFileName << std::endl;
 	scanningProgressObserver->onScanningProgress(logStream.str());
 
 	do 
 	{
-		auto FindFileData = findFileWrapper.getFoundFileData();
-
-		if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+		if ((findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 		{
-			auto filePath = traverseDir + FindFileData.cFileName;
-			auto fileWrapper = FileWrapper(filePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			auto filePath = traverseDir + findFileData.cFileName;
+
+			auto fileHandleWrapper = HandleWrapper(CreateFileW(filePath.c_str(),
+				GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL), HandleType::FILE_HANDLE);
 
 			logStream.str(L"");
-			logStream << "Found file: " << FindFileData.cFileName << std::endl;
+			logStream << "Found file: " << findFileData.cFileName << std::endl;
 			scanningProgressObserver->onScanningProgress(logStream.str());
 
-			auto fileSize = fileWrapper.getFileSize();
+			auto fileSize = FileUtils::getFileSize(fileHandleWrapper.getHandle());
 			auto fileSystemObject = FileSystemObjectSharedPtr(new FileSystemObject(FileSystemObjectType::File, traverseDir,
-				FindFileData.cFileName, fileSize));
+				findFileData.cFileName, fileSize));
 			directorySize += fileSize;
 
 			fileSystemObjects.emplace_back(fileSystemObject);
 		}
 		else
 		{
-			if ((wcscmp(FindFileData.cFileName, L".") != 0) && (wcscmp(FindFileData.cFileName, L"..") != 0))
+			if ((wcscmp(findFileData.cFileName, L".") != 0) && (wcscmp(findFileData.cFileName, L"..") != 0))
 			{
 				logStream.str(L"");
-				logStream << "Found dir: " << FindFileData.cFileName << std::endl;
+				logStream << "Found dir: " << findFileData.cFileName << std::endl;
 				scanningProgressObserver->onScanningProgress(logStream.str());
 
-				auto nextDir = traverseDir + FindFileData.cFileName + L"\\";
+				auto nextDir = traverseDir + findFileData.cFileName + L"\\";
 				logStream.str(L"");
 				logStream << L"-------------" << std::endl << L"Moving to next dir: " << nextDir << std::endl << "-------------" << std::endl;
 				traverse(nextDir);
 			}
 		}
-	} while (findFileWrapper.findNextFile());
+	} while (FindNextFile(findFileHandleWrapper.getHandle(), &findFileData));
 
 	logStream.str(L"");
 	logStream << L"Directory \"" << traverseDir << L"\"size (bytes): " << directorySize << std::endl;

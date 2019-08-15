@@ -4,7 +4,7 @@
 #include "FindFilesByExtensionStrategy.h"
 #include "DeleteFilesByNameStrategy.h"
 #include "ConsoleScanningProgressObserver.h"
-#include "FileWrapper.h"
+#include "HandleWrapper.h"
 
 void FileSystemScannerTest::SetUp()
 {
@@ -111,7 +111,8 @@ TEST_F(FileSystemScannerTest, FindFilesByExtension)
 TEST_F(FileSystemScannerTest, DeleteFilesByName) 
 {
 	{
-		auto file1 = FileWrapper(L"file1", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		auto fileHandleWrapper = HandleWrapper(CreateFileW(L"file1",
+			GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL), HandleType::FILE_HANDLE);
 	}
 
 	std::list<FileSystemObjectSharedPtr> fsObjects;

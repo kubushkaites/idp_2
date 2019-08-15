@@ -99,14 +99,11 @@
     <ClInclude Include="FindFilesByExtensionStrategy.h">
       <Filter>Header Files\SearchGoalStrategy</Filter>
     </ClInclude>
-    <ClInclude Include="FindFileWrapper.h">
-      <Filter>Header Files\Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="FileWrapper.h">
-      <Filter>Header Files\Wrappers</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleWrapper.h">
+      <Filter>Header Files\Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,10 +149,10 @@
     <ClCompile Include="FindFilesByExtensionStrategy.cpp">
       <Filter>Source Files\SearchGoalStrategy</Filter>
     </ClCompile>
-    <ClCompile Include="FindFileWrapper.cpp">
-      <Filter>Source Files\Wrappers</Filter>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileWrapper.cpp">
+    <ClCompile Include="HandleWrapper.cpp">
       <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
   </ItemGroup>

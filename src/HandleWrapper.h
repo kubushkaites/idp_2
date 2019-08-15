@@ -1,12 +1,13 @@
 #pragma once
 #include "pch.h"
 
-enum class HandleType{SEARCH_HANDLE, FILE_HANDLE};
+enum class HandleType{ FILE_HANDLE, FIND_FILE_HANDLE};
 
-class HandleWrapper {
+class HandleWrapper 
+{
 public:
 	HandleWrapper(HANDLE handle, HandleType handleType);
-	HANDLE GetHandle() const;
+	HANDLE getHandle() const;
 	~HandleWrapper();
 private:
 	HANDLE handle;
