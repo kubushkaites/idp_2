@@ -159,12 +159,14 @@
     <ClInclude Include="ConsoleScanningProgressObserver.h" />
     <ClInclude Include="DeleteFilesByNameStrategy.h" />
     <ClInclude Include="DepthTraversingStrategy.h" />
+    <ClInclude Include="FileHandleWrapper.h" />
     <ClInclude Include="FileSystemObject.h" />
     <ClInclude Include="FileSystemScanner.h" />
+    <ClInclude Include="FindFileHandleWrapper.h" />
     <ClInclude Include="FindFilesByExtensionStrategy.h" />
     <ClInclude Include="FindLargestFileStrategy.h" />
     <ClInclude Include="FindLargestFoldersStrategy.h" />
-    <ClInclude Include="HandleWrapper.h" />
+    <ClInclude Include="BaseHandleWrapper.h" />
     <ClInclude Include="IScanningProgressObserver.h" />
     <ClInclude Include="ISearchGoalStrategy.h" />
     <ClInclude Include="ITraversingStrategy.h" />
@@ -179,12 +181,14 @@
     <ClCompile Include="ConsoleScanningProgressObserver.cpp" />
     <ClCompile Include="DeleteFilesByNameStrategy.cpp" />
     <ClCompile Include="DepthTraversingStrategy.cpp" />
+    <ClCompile Include="FileHandleWrapper.cpp" />
     <ClCompile Include="FileSystemObject.cpp" />
     <ClCompile Include="FileSystemScanner.cpp" />
+    <ClCompile Include="FindFileHandleWrapper.cpp" />
     <ClCompile Include="FindFilesByExtensionStrategy.cpp" />
     <ClCompile Include="FindLargestFileStrategy.cpp" />
     <ClCompile Include="FindLargestFoldersStrategy.cpp" />
-    <ClCompile Include="HandleWrapper.cpp" />
+    <ClCompile Include="BaseHandleWrapper.cpp" />
     <ClCompile Include="idp2.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

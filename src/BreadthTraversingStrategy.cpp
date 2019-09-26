@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "BreadthTraversingStrategy.h"
 #include "Utils.h"
-#include "HandleWrapper.h"
+#include "FileHandleWrapper.h"
+#include "FindFileHandleWrapper.h"
 
 BreadthTraversingStrategy::BreadthTraversingStrategy(ScanningProgressObserverSharedPtr scanningProgressObserver)
 	: scanningProgressObserver(scanningProgressObserver)
@@ -27,8 +28,8 @@ const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> BreadthTrave
 
 		WIN32_FIND_DATA findFileData;
 
-		auto findFileHandleWrapper = HandleWrapper(FindFirstFileEx(nextSearchPathWithWildCard.c_str(), FindExInfoStandard, &findFileData,
-			FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH), HandleType::FIND_FILE_HANDLE);
+		auto findFileHandleWrapper = FindFileHandleWrapper(FindFirstFileEx(nextSearchPathWithWildCard.c_str(), FindExInfoStandard, &findFileData,
+			FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH));
 
 		do
 		{
@@ -36,8 +37,8 @@ const std::tuple<bool, const std::list<FileSystemObjectSharedPtr>&> BreadthTrave
 			{
 				auto filePath = nextSearchPath + findFileData.cFileName;
 
-				auto fileHandleWrapper = HandleWrapper(CreateFileW(filePath.c_str(),
-					GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL), HandleType::FILE_HANDLE);
+				auto fileHandleWrapper = FileHandleWrapper(CreateFileW(filePath.c_str(),
+					GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
 
 				logStream.str(L"");
 				logStream << L"Found file: " << findFileData.cFileName << std::endl;
